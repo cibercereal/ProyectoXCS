@@ -3,30 +3,34 @@ package es.uvigo.esei.dgss.teama.microstories.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
+@Entity
 public class Story implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private Date date;
 
     private String title;
-
+    @Column(length = 1000)
     private String content;
 
-    private String genre;
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
+    @Enumerated(EnumType.STRING)
+    private Theme mainTheme;
 
-    private String mainTheme;
-
-    private String secondaryTheme;
+    private Theme secondaryTheme;
 
     private String author;
-
+    private boolean published;
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, String genre, String mainTheme, String secondaryTheme, String author) {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author,boolean published) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -35,6 +39,7 @@ public class Story implements Serializable {
         this.mainTheme = mainTheme;
         this.secondaryTheme = secondaryTheme;
         this.author = author;
+        this.published = published;
     }
 
     public int getId() {
@@ -53,19 +58,23 @@ public class Story implements Serializable {
         return content;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public String getMainTheme() {
+    public Theme getMainTheme() {
         return mainTheme;
     }
 
-    public String getSecondaryTheme() {
+    public Theme getSecondaryTheme() {
         return secondaryTheme;
     }
 
     public String getAuthor() {
         return author;
+    }
+
+    public boolean isPublished() {
+        return published;
     }
 }
