@@ -1,10 +1,22 @@
 package es.uvigo.esei.dgss.teama.microstories.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.TemporalType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
+/**
+ * The Story entity  represents the content of a story. This can be a Story, a nano story or a poem.
+ * It also contains the author of said story and the topic and subtopic
+ * @author Julio Patricio Da Silva (jpsilva) Brais Domínguez Álvarez (bdalvarez)
+ */
 @Entity
 public class Story implements Serializable {
 
@@ -12,8 +24,9 @@ public class Story implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Temporal(TemporalType.DATE)
     private Date date;
-
+    @Column(length = 70)
     private String title;
     @Column(length = 1000)
     private String content;
@@ -22,7 +35,7 @@ public class Story implements Serializable {
     private Genre genre;
     @Enumerated(EnumType.STRING)
     private Theme mainTheme;
-
+    @Enumerated(EnumType.STRING)
     private Theme secondaryTheme;
 
     private String author;
@@ -30,10 +43,25 @@ public class Story implements Serializable {
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author,boolean published) {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author,boolean published) throws Exception {
         this.id = id;
         this.date = date;
         this.title = title;
+
+        switch (genre) {
+            case STORY:
+                if(content.length() >1000)
+                    throw new IllegalArgumentException("Error: Content for a story cannot exceed 1000 characters");
+                break;
+            case POETRY:
+                if(content.length() >500)
+                    throw new IllegalArgumentException("Error: Content for a poetry cannot exceed 500 characters");
+                break;
+            case NANOSTORY:
+                if(content.length() >150)
+                    throw new IllegalArgumentException("Error: Content for a nanostory cannot exceed 150 characters");
+                break;
+        }
         this.content = content;
         this.genre = genre;
         this.mainTheme = mainTheme;
@@ -77,4 +105,6 @@ public class Story implements Serializable {
     public boolean isPublished() {
         return published;
     }
+
+
 }
