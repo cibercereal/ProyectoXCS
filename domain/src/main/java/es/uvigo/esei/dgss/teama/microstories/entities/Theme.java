@@ -5,5 +5,5 @@ package es.uvigo.esei.dgss.teama.microstories.entities;
  * @author Julio Patricio Da Silva (jpsilva) Brais Domínguez Álvarez (bdalvarez)
  */
 public enum Theme {
-    ADVENTURE, SCIFI, STORY, CHILDISH, ROMANCE, SUSPENSE, HORROR
+    ADVENTURE, SCIENCE_FICTION, HISTORIC, CHILD, ROMANCE, SUSPENSE, HORROR
 }

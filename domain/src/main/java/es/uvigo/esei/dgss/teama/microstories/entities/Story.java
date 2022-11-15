@@ -22,9 +22,9 @@ public class Story implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Column(length = 70)
     private String title;
@@ -75,7 +75,7 @@ public class Story implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public String getTitle() {
@@ -106,5 +106,18 @@ public class Story implements Serializable {
         return published;
     }
 
-
+    @Override
+    public String toString() {
+        return "Story{" +
+                "id=" + id +
+                ", date=" + date +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", genre=" + genre +
+                ", mainTheme=" + mainTheme +
+                ", secondaryTheme=" + secondaryTheme +
+                ", author='" + author + '\'' +
+                ", published=" + published +
+                '}';
+    }
 }

@@ -7,12 +7,11 @@
 	<persistence-unit name="test">
 		<jta-data-source>java:jboss/datasources/dgss2223/teamA/microstories</jta-data-source>
 
-		<class>es.uvigo.esei.dgss.teama.microstories.entities.Story</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>
 </persistence>

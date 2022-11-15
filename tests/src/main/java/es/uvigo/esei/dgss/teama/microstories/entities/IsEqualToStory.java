@@ -58,4 +58,8 @@ public class IsEqualToStory extends IsEqualToEntity<Story> {
     public static Matcher<Iterable<? extends Story>> containsStoriesWithoutRelationsInAnyOrder(Iterable<Story> stories) {
         return containsEntityInAnyOrder(IsEqualToStory::equalToStoryWithoutRelations, stories);
     }
+    @Factory
+    public static Matcher<Iterable<? extends Story>> containsStoriesInOrder(Iterable<Story> stories) {
+        return containsEntityInOrder(IsEqualToStory::equalToStory, stories);
+    }
 }
