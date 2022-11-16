@@ -43,7 +43,7 @@ public class Story implements Serializable {
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author,boolean published) throws Exception {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author,boolean published) throws IllegalArgumentException {
         this.id = id;
         this.date = date;
         this.title = title;
