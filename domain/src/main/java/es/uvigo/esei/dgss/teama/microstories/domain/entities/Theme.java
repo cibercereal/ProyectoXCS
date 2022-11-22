@@ -1,4 +1,4 @@
-package es.uvigo.esei.dgss.teama.microstories.entities;
+package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 /**
  * This enum represents the theme and subtopic that a story can contain

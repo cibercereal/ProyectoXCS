@@ -1,4 +1,4 @@
-package es.uvigo.esei.dgss.teama.microstories.entities;
+package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

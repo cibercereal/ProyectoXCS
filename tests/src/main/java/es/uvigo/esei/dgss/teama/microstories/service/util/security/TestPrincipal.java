@@ -1,7 +1,6 @@
 package es.uvigo.esei.dgss.teama.microstories.service.util.security;
 
 import java.security.Principal;
-
 import javax.enterprise.inject.Alternative;
 import javax.inject.Singleton;
 

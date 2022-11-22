@@ -7,7 +7,7 @@
 	<persistence-unit name="test">
 		<jta-data-source>java:jboss/datasources/dgss2223/teamA/microstories</jta-data-source>
 
-		<class>es.uvigo.esei.dgss.teama.microstories.entities.Story</class>
+		<class>es.uvigo.esei.dgss.teama.microstories.domain.entities.Story</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>

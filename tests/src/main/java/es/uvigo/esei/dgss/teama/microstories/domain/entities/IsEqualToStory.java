@@ -1,4 +1,4 @@
-package es.uvigo.esei.dgss.teama.microstories.entities;
+package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;

@@ -1,4 +1,8 @@
-package es.uvigo.esei.dgss.teama.microstories.entities;
+package es.uvigo.esei.dgss.teama.microstories.domain.entities;
+
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,6 +91,14 @@ public class StoryDataset {
     }
 
     public static List<Story> recentStories() {
+        return stream(stories())
+                .filter(Story::isPublished)
+                .sorted(Comparator.comparing(Story::getDate).reversed())
+                .limit(6)
+                .collect(Collectors.toList());
+    }
+
+    public static List<Story> nullStories() {
         return stream(stories())
                 .filter(Story::isPublished)
                 .sorted(Comparator.comparing(Story::getDate).reversed())

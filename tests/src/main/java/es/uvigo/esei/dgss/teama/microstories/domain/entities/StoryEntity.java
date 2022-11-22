@@ -1,6 +1,9 @@
-package es.uvigo.esei.dgss.teama.microstories.entities;
+package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import org.junit.Test;
 
 import java.util.Date;

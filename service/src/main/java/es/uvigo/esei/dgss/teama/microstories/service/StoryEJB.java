@@ -1,7 +1,7 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
 
-import es.uvigo.esei.dgss.teama.microstories.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
