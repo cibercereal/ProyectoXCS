@@ -13,6 +13,7 @@ import java.util.List;
 public class StoryEJB {
     @PersistenceContext
     private EntityManager em;
+
     public List<Story> getRecentStories() {
         final int LIMIT_STORIES = 6;
         return em.createQuery("SELECT s FROM Story s WHERE s.published IS TRUE ORDER BY s.date DESC ",

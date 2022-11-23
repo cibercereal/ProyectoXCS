@@ -32,7 +32,6 @@ public class TestStoryEJB {
     private StoryEJB storyEJB;
 
 
-
     @Deployment
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war").addClasses(StoryEJB.class, StoryDataset.class)
@@ -42,6 +41,7 @@ public class TestStoryEJB {
                 .addAsResource("arquillian.extension.persistence.dbunit.properties")
                 .addAsWebInfResource("beans.xml", "beans.xml");
     }
+
     @Test
     @ShouldMatchDataSet("stories.xml")
     public void testRecentStories() {
