@@ -1,11 +1,7 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import org.junit.Test;
-
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -17,7 +13,7 @@ import static org.junit.Assert.assertThat;
  *
  * @author Julio Patricio Da Silva (jpsilva) Brais Domínguez Álvarez (bdalvarez)
  */
-public class StoryEntity {
+public class StoryEntityTest {
 
     @Test
     public void testStoryDataType() throws IllegalArgumentException {
@@ -43,29 +39,13 @@ public class StoryEntity {
         assertThat(localStory.getAuthor(), is(equalTo(author)));
         assertThat(localStory.isPublished(), is(equalTo(published)));
     }
+ 
 
-    @Test
-    public void testStoryLengthStory() throws IllegalArgumentException {
-        final int id = 1;
-        final String title = "Title Test";
-        final String content = "Text Test";
-        final Genre genre = Genre.STORY;
-        final Theme mainTheme = Theme.ADVENTURE;
-        final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
-        final Date date = new Date();
-        final boolean published = true;
-
-        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
-
-
-    }
-
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testStoryLengthNanoStory() throws IllegalArgumentException {
         final int id = 1;
         final String title = "Title Test";
-        final String content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non eros nec purus scelerisque varius vitae non mauris. Nunc malesuada efficitur quam, quis rhoncus leo efficitur lacinia. Proin enim quam, faucibus nec leo eget, euismod tincidunt risus. Suspendisse tristique et tortor vitae feugiat. Nulla tristique semper diam at molestie. In cursus tempor sem quis ultrices. Vestibulum vestibulum purus non pulvinar aliquam. Morbi sit amet ipsum eu ex pulvinar accumsan at at dolor. Nunc eu auctor orci. Sed maximus metus dui, ut commodo nisi dignissim sit amet. Sed ut nunc elementum, gravida nibh at, volutpat dui. Quisque fringilla mi sapien, ac blandit risus tincidunt sit amet. Aenean pulvinar, felis a pellentesque aliquet, mi erat scelerisque dui, pellentesque molestie est ex non lectus. Curabitur rhoncus libero sem, id malesuada arcu volutpat a. Fusce feugiat enim in justo ornare, non condimentum magna dignissim. Morbi neque tellus, viverra sit amet blandit eu, commodo at nisl. ";
+        final String content = new String(new char[151]);
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
@@ -75,6 +55,36 @@ public class StoryEntity {
 
         Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
+    }
 
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testStoryLengthPoetryStory() throws IllegalArgumentException {
+        final int id = 1;
+        final String title = "Title Test";
+        final String content = new String(new char[501]);
+        final Genre genre = Genre.POETRY;
+        final Theme mainTheme = Theme.ADVENTURE;
+        final Theme secondaryTheme = Theme.SUSPENSE;
+        final String author = "Antonio";
+        final Date date = new Date();
+        final boolean published = true;
+
+        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testStoryLengthStory() throws IllegalArgumentException {
+        final int id = 1;
+        final String title = "Title Test";
+        final String content = new String(new char[1001]);
+        final Genre genre = Genre.STORY;
+        final Theme mainTheme = Theme.ADVENTURE;
+        final Theme secondaryTheme = Theme.SUSPENSE;
+        final String author = "Antonio";
+        final Date date = new Date();
+        final boolean published = true;
+
+        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
     }
 }
