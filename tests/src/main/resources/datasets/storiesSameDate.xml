@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <STORY id="1"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="ROMANCE" secondaryTheme="HORROR" published="true"/>
+    <STORY id="2"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="Integer aliquam adipiscing lacus." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="POETRY" mainTheme="CHILD" secondaryTheme="HORROR" published="true"/>
+    <STORY id="3"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true"/>
+    <STORY id="4"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="sed pede. Cum sociis" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HORROR"  secondaryTheme="HORROR" published="true"/>
+    <STORY id="5"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="eleifend. Cras sed leo." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="ROMANCE" secondaryTheme="HORROR" published="true"/>
+    <STORY id="6"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis" genre="NANOSTORY" mainTheme="SUSPENSE" secondaryTheme="HORROR" published="true"/>
+    <STORY id="7" author="Juan Manuel Lopez"  date="2006-02-01 01:01:01" title="In nec orci. Donec" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true"/>
+</dataset>

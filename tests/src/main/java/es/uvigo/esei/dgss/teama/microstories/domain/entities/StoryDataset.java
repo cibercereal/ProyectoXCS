@@ -89,9 +89,56 @@ public class StoryDataset {
             return null;
         }
     }
+    public static Story[] storiesLess() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        try {
+            Story[] stories = new Story[]{
+                    new Story(1, formatter.parse("2009-02-01 01:01:01"), "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(2, formatter.parse("2008-02-01 01:01:01"), "Integer aliquam adipiscing lacus.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.POETRY, Theme.CHILD, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(3, formatter.parse("2007-02-01 01:01:01"), "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.HISTORIC, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(4, formatter.parse("2006-02-01 01:01:01"), "sed pede. Cum sociis", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.HORROR, Theme.HORROR, "Juan Manuel Lopez", true),
+            };
+            return stories;
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static Story[] storiesSameDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        try {
+            Story[] stories = new Story[]{
+                    new Story(1, formatter.parse("2006-02-01 01:01:01"), "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(2, formatter.parse("2006-02-01 01:01:01"), "Integer aliquam adipiscing lacus.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.POETRY, Theme.CHILD, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(3, formatter.parse("2006-02-01 01:01:01"), "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.HISTORIC, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(4, formatter.parse("2006-02-01 01:01:01"), "sed pede. Cum sociis", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.HORROR, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(5, formatter.parse("2006-02-01 01:01:01"), "eleifend. Cras sed leo.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(6, formatter.parse("2006-02-01 01:01:01"), "Aliquam ultrices iaculis odio.", "rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis", Genre.NANOSTORY, Theme.SUSPENSE, Theme.HORROR, "Juan Manuel Lopez", true),
+                    new Story(7, formatter.parse("2006-02-01 01:01:01"), "In nec orci. Donec", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.HISTORIC, Theme.HORROR, "Juan Manuel Lopez", true),
+            };
+            return stories;
+        } catch (ParseException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static List<Story> recentStories() {
         return stream(stories())
+                .filter(Story::isPublished)
+                .sorted(Comparator.comparing(Story::getDate).reversed())
+                .limit(6)
+                .collect(Collectors.toList());
+    }
+    public static List<Story> recentStoriesLess() {
+        return stream(storiesLess())
+                .filter(Story::isPublished)
+                .sorted(Comparator.comparing(Story::getDate).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
+    }
+    public static List<Story> recentStoriesSameDate() {
+        return stream(storiesSameDate())
                 .filter(Story::isPublished)
                 .sorted(Comparator.comparing(Story::getDate).reversed())
                 .limit(6)
