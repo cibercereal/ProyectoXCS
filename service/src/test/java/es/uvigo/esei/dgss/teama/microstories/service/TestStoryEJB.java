@@ -23,9 +23,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
-import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.recentStories;
-import static es.uvigo.esei.dgss.teama.microstories.entities.IsEqualToStory.containsStoriesInOrder;
-import static es.uvigo.esei.dgss.teama.microstories.entities.StoryDataset.*;
+import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -80,6 +78,8 @@ public class TestStoryEJB {
     public void testRecentStoriesLess() {
         final List<Story> recentStoriesLess = recentStoriesLess();
         final List<Story> dbStories = storyEJB.getRecentStories();
+        System.out.println(recentStoriesLess);
+        System.out.println(dbStories);
         assertThat(recentStoriesLess, containsStoriesInOrder(dbStories));
     }
     @Test
