@@ -1,6 +1,6 @@
 package es.uvigo.esei.dgss.teama.microstories.jsf.controllers;
 
-import es.uvigo.esei.dgss.teama.microstories.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import java.io.Serializable;
