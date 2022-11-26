@@ -1,11 +1,14 @@
 package es.uvigo.esei.dgss.teama.microstories.rest;
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import javax.ejb.EJB;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,6 +35,23 @@ public class StoryResource {
     @Path("recent")
     public Response getRecentStories() {
         return Response.ok(storyEJB.getRecentStories()).build();
+    }
+
+    /**
+     * Returns a history from its identifier. If the history is not found, an exception is thrown.
+     *
+     * @param id The id of the story to return.
+     * @return The story with the searched id.
+     */
+    @GET
+    @Path("{id}")
+    public Response getStoryById(@PathParam("id") int id) {
+        final Story story = this.storyEJB.getById(id);
+
+        if (story == null)
+            throw new BadRequestException();
+        else
+            return Response.ok(story).build();
     }
 }
 

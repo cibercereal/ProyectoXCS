@@ -21,4 +21,9 @@ public class StoryEJB {
         return em.createQuery("SELECT s FROM Story s WHERE s.published IS TRUE ORDER BY s.date DESC, s.id ASC ",
                 Story.class).setMaxResults(LIMIT_STORIES).getResultList();
     }
+
+    @PermitAll
+    public Story getById(final int id) {
+        return em.find(Story.class, id);
+    }
 }
