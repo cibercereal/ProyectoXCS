@@ -3,7 +3,7 @@
 <html lang="en-US" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 
@@ -53,48 +53,52 @@
             <div class="container">
                 <div class="row">
 
-                    <c:if test="#{not empty storyController.recentStories}">
-                        <ui:repeat value="#{storyController.recentStories}" var="story">
-                            <!-- Story -->
-                            <div class="col-md-4">
-                                <div class="card mb-4 shadow-sm">
-                                    <div class="card-header">
-                                        <h3 class="card-title">#{story.title}</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            #{story.content.substring(0, 60)}...
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <button
-                                                        type="button"
-                                                        class="btn btn-sm btn-outline-secondary"
-                                                        data-toggle="modal"
-                                                        data-target="#storyModal"
-                                                >
-                                                    View
-                                                </button>
-                                                <button
-                                                        type="button"
-                                                        class="btn btn-sm btn-outline-secondary"
-                                                >
-                                                    Edit
-                                                </button>
+                    <c:choose>
+                        <c:when test="#{not empty storyController.recentStories}">
+                            <ui:repeat value="#{storyController.recentStories}" var="story">
+                                <!-- Story -->
+                                <div class="col-md-4">
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header">
+                                            <h3 class="card-title">#{story.title}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                #{story.content.substring(0, 60)}...
+                                            </p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-sm btn-outline-secondary"
+                                                            data-toggle="modal"
+                                                            data-target="#storyModal"
+                                                    >
+                                                        View
+                                                    </button>
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-sm btn-outline-secondary"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card-footer text-muted  ">
-                                        <span class="badge badge-pill badge-primary  m-1">#{story.mainTheme}</span>
+                                        <div class="card-footer text-muted  ">
+                                            <span class="badge badge-pill badge-primary  m-1">#{story.mainTheme}</span>
 
-                                        <span class="badge badge-pill badge-secondary  m-1">#{story.secondaryTheme}</span>
-                                        <span class="badge badge-pill badge-dark float-right m-1">#{story.genre}</span>
+                                            <span class="badge badge-pill badge-secondary  m-1">#{story.secondaryTheme}</span>
+                                            <span class="badge badge-pill badge-dark float-right m-1">#{story.genre}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ui:repeat>
-                    </c:if>
-
+                            </ui:repeat>
+                        </c:when>
+                        <c:otherwise>
+                            <h3 class="mt-5 text-center">There is nothing to see here yet!</h3>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
