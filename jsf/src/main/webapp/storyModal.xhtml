@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<!-- Story Modal -->
+<div
+        class="modal fade storyModal"
+        id="#{story.title}"
+        style="padding-top: 15%;"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">
+                    #{story.title}
+                </h3>
+                <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                >
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>#{story.content}</p>
+                <p class="h6 text-muted"><small>Author: #{story.author} </small></p>
+                <p class="h6 text-muted"><small>Date: #{story.date} </small></p>
+            </div>
+            <div class="modal-footer">
+                <span class="badge badge-primary">#{story.mainTheme}</span>
+                <span class="badge badge-secondary ">#{story.secondaryTheme}</span>
+                <span class="badge badge-dark ">#{story.genre}</span>
+
+                <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

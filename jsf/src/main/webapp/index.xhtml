@@ -72,14 +72,12 @@
                                                             type="button"
                                                             class="btn btn-sm btn-outline-secondary"
                                                             data-toggle="modal"
-                                                            data-target="#storyModal"
-                                                    >
+                                                            data-target="##{story.title}">
                                                         View
                                                     </button>
                                                     <button
                                                             type="button"
-                                                            class="btn btn-sm btn-outline-secondary"
-                                                    >
+                                                            class="btn btn-sm btn-outline-secondary">
                                                         Edit
                                                     </button>
                                                 </div>
@@ -93,6 +91,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <ui:include src="./storyModal.xhtml"></ui:include>
                             </ui:repeat>
                         </c:when>
                         <c:otherwise>
@@ -104,10 +103,11 @@
         </div>
     </main>
 
+    <h:outputScript name="webjars/jquery/3.1.1/dist/jquery.slim.min.js"/>
     <h:outputScript name="webjars/bootstrap/4.1.3/js/bootstrap.min.js"/>
     <h:outputScript name="webjars/popper/1.16.1/popper.min.js"/>
     <h:outputScript name="webjars/hoolder/2.9.4/holder.min.js"/>
-    <h:outputScript name="webjars/jquery/3.1.1//dist/jquery.slim.js"/>
+
 
 </h:body>
 </html>
