@@ -152,4 +152,11 @@ public class StoryDataset {
                 .limit(6)
                 .collect(Collectors.toList());
     }
+    
+    public static List<Story> getStoriesContainingText(String text) {
+      return stream(stories())
+              .filter(story -> story.getTitle().contains(text) || story.getContent().contains(text))
+              .sorted(Comparator.comparing(Story::getDate).reversed())
+              .collect(Collectors.toList());
+  }
 }

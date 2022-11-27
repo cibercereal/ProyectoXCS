@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
@@ -91,6 +92,34 @@ public class TestStoryEJB {
         System.out.println(recentStories);
         System.out.println(dbStories);
         assertThat(recentStories, containsStoriesInOrder(dbStories));
+    }
+    
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetStoriesContainingText() {
+        String text = "Aliquam";
+        final List<Story> storiesContainingText = getStoriesContainingText(text);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
+        final List<Story> dbStoriesPage2 = storyEJB.getStoriesContainingText(text, 2);
+        
+        List<Story> expectedStoriesPage1 = storiesContainingText.subList(0, 9);
+        List<Story> expectedStoriesPage2 = storiesContainingText.subList(9, 18);
+ 
+        assertThat(dbStoriesPage1, containsStoriesInOrder(expectedStoriesPage1));
+        assertThat(dbStoriesPage2, containsStoriesInOrder(expectedStoriesPage2));
+    }
+    
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetStoriesContainingTextNotFound() {
+        String text = "text not found";
+
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
+        
+        assertThat(dbStoriesPage1, is(new ArrayList<>()));
+
     }
 
 }
