@@ -65,6 +65,7 @@ public class TestStoryEJB {
 
         assertThat(recentStories, containsStoriesInOrder(dbStories));
     }
+
     //todo vacio , cuando hay menos de seis,mas de seis  con la misma fecha de publlicacion
     @Test
     @UsingDataSet("storiesEmpty.xml")
@@ -73,6 +74,7 @@ public class TestStoryEJB {
         final List<Story> dbStories = storyEJB.getRecentStories();
         assertThat(dbStories, is(IsEmptyCollection.empty()));
     }
+
     @Test
     @UsingDataSet("storiesLess.xml")
     @ShouldMatchDataSet("storiesLess.xml")
@@ -83,6 +85,7 @@ public class TestStoryEJB {
         System.out.println(dbStories);
         assertThat(recentStoriesLess, containsStoriesInOrder(dbStories));
     }
+
     @Test
     @UsingDataSet("storiesSameDate.xml")
     @ShouldMatchDataSet("storiesSameDate.xml")
@@ -93,7 +96,7 @@ public class TestStoryEJB {
         System.out.println(dbStories);
         assertThat(recentStories, containsStoriesInOrder(dbStories));
     }
-    
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
@@ -102,14 +105,14 @@ public class TestStoryEJB {
         final List<Story> storiesContainingText = getStoriesContainingText(text);
         final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
         final List<Story> dbStoriesPage2 = storyEJB.getStoriesContainingText(text, 2);
-        
+
         List<Story> expectedStoriesPage1 = storiesContainingText.subList(0, 9);
         List<Story> expectedStoriesPage2 = storiesContainingText.subList(9, 18);
- 
+
         assertThat(dbStoriesPage1, containsStoriesInOrder(expectedStoriesPage1));
         assertThat(dbStoriesPage2, containsStoriesInOrder(expectedStoriesPage2));
     }
-    
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
@@ -117,9 +120,7 @@ public class TestStoryEJB {
         String text = "text not found";
 
         final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
-        
+
         assertThat(dbStoriesPage1, is(new ArrayList<>()));
-
     }
-
 }
