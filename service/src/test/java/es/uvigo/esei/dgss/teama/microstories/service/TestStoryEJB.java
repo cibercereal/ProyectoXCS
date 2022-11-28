@@ -4,8 +4,6 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
 
-import es.uvigo.esei.dgss.teama.microstories.service.util.security.TestPrincipal;
-import org.hamcrest.collection.IsEmptyCollection;
 import org.jboss.arquillian.container.test.api.Deployment;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -26,6 +24,7 @@ import java.util.List;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(Arquillian.class)
@@ -72,7 +71,7 @@ public class TestStoryEJB {
     @ShouldMatchDataSet("storiesEmpty.xml")
     public void testRecentStoriesEmpty() {
         final List<Story> dbStories = storyEJB.getRecentStories();
-        assertThat(dbStories, is(IsEmptyCollection.empty()));
+        assertThat(dbStories, is(empty()));
     }
 
     @Test
@@ -102,12 +101,11 @@ public class TestStoryEJB {
     @ShouldMatchDataSet("stories.xml")
     public void testGetStoriesContainingText() {
         String text = "Aliquam";
-        final List<Story> storiesContainingText = getStoriesContainingText(text);
-        final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
-        final List<Story> dbStoriesPage2 = storyEJB.getStoriesContainingText(text, 2);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1);
+        final List<Story> dbStoriesPage2 = storyEJB.getStoriesByText(text, 2);
 
-        List<Story> expectedStoriesPage1 = storiesContainingText.subList(0, 9);
-        List<Story> expectedStoriesPage2 = storiesContainingText.subList(9, 18);
+        List<Story> expectedStoriesPage1 = getStoriesSubListByText(text, 0, 9);
+        List<Story> expectedStoriesPage2 = getStoriesSubListByText(text, 9, 18);
 
         assertThat(dbStoriesPage1, containsStoriesInOrder(expectedStoriesPage1));
         assertThat(dbStoriesPage2, containsStoriesInOrder(expectedStoriesPage2));
@@ -116,11 +114,11 @@ public class TestStoryEJB {
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
-    public void testGetStoriesContainingTextNotFound() {
+    public void testGetStoriesByTextNotFound() {
         String text = "text not found";
 
-        final List<Story> dbStoriesPage1 = storyEJB.getStoriesContainingText(text, 1);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1);
 
-        assertThat(dbStoriesPage1, is(new ArrayList<>()));
+        assertThat(dbStoriesPage1, is(empty()));
     }
 }

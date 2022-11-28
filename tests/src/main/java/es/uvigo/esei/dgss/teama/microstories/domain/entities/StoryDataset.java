@@ -153,10 +153,11 @@ public class StoryDataset {
                 .collect(Collectors.toList());
     }
     
-    public static List<Story> getStoriesContainingText(String text) {
+    public static List<Story> getStoriesSubListByText(String text, int indexI, int indexJ) {
       return stream(stories())
               .filter(story -> story.getTitle().contains(text) || story.getContent().contains(text))
               .sorted(Comparator.comparing(Story::getDate).reversed())
-              .collect(Collectors.toList());
+              .collect(Collectors.toList())
+              .subList(indexI, indexJ);
   }
 }

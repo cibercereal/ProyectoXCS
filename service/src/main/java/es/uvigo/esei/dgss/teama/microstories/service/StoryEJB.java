@@ -14,7 +14,7 @@ import java.util.List;
 @PermitAll
 public class StoryEJB {
     final int PAGE_SIZE = 9;
-  
+
     @PersistenceContext
     private EntityManager em;
 
@@ -29,14 +29,13 @@ public class StoryEJB {
     public Story getById(final int id) {
         return em.find(Story.class, id);
     }
-    
-    public List<Story> getStoriesContainingText(String text, int pageNumber) {
-      Query query = em.createQuery("SELECT s FROM Story s WHERE s.title like :text OR s.content like :text ORDER BY s.date DESC, s.id ASC", Story.class);
-      query.setParameter("text", "%" + text + "%");
-      query.setFirstResult((pageNumber-1) * PAGE_SIZE); 
-      query.setMaxResults(PAGE_SIZE);
-      
-      return query.getResultList();
-      
-  }
+
+    public List<Story> getStoriesByText(String text, int pageNumber) {
+        Query query = em.createQuery("SELECT s FROM Story s WHERE s.title like :text OR s.content like :text ORDER BY s.date DESC, s.id ASC", Story.class);
+        query.setParameter("text", "%" + text + "%");
+        query.setFirstResult((pageNumber - 1) * PAGE_SIZE);
+        query.setMaxResults(PAGE_SIZE);
+
+        return query.getResultList();
+    }
 }
