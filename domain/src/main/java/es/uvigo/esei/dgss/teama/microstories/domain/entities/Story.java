@@ -45,28 +45,26 @@ public class Story implements Serializable {
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published) throws IllegalArgumentException, NullPointerException {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published) throws IllegalArgumentException {
 
         if (date == null) {
-            throw new NullPointerException("Error: Content for a date cannot be null");
+            throw new IllegalArgumentException("Error: Content for a date cannot be null");
+        }
+
+        if (title == null|| title.length() == 0) {
+            throw new IllegalArgumentException("Error: Content for a title cannot be empty or null");
         }
 
         if (title.length() > 70) {
             throw new IllegalArgumentException("Error: Content for a title cannot exceed 70 characters");
-        } else if (title.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a title cannot be empty");
-        } else if (title == null) {
-            throw new NullPointerException("Error: Content for a title cannot be null");
         }
 
-        if (content.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a content cannot be empty");
-        } else if (content == null) {
-            throw new NullPointerException("Error: Content for a content cannot be null");
+        if (content == null || content.length() == 0) {
+            throw new IllegalArgumentException("Error: Content for a content cannot be empty or null");
         }
 
         if (genre == null) {
-            throw new NullPointerException("Error: Content for a genre cannot be null");
+            throw new IllegalArgumentException("Error: Content for a genre cannot be null");
         }
 
         switch (genre) {
@@ -85,19 +83,17 @@ public class Story implements Serializable {
         }
 
         if (mainTheme == null) {
-            throw new NullPointerException("Error: Content for a mainTheme cannot be null");
+            throw new IllegalArgumentException("Error: Content for a mainTheme cannot be null");
         }
 
         if (secondaryTheme == null) {
-            throw new NullPointerException("Error: Content for a secondaryTheme cannot be null");
+            throw new IllegalArgumentException("Error: Content for a secondaryTheme cannot be null");
         }
-
+        if (author == null || author.length() == 0) {
+            throw new IllegalArgumentException("Error: Content for a author cannot be empty");
+        }
         if (author.length() > 255) {
             throw new IllegalArgumentException("Error: Content for a author cannot exceed 255 characters");
-        } else if (author.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a author cannot be empty");
-        } else if (author == null) {
-            throw new NullPointerException("Error: Content for a author cannot be null");
         }
 
         this.id = id;
