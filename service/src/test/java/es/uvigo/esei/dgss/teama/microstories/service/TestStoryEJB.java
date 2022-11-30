@@ -3,12 +3,10 @@ package es.uvigo.esei.dgss.teama.microstories.service;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
-
+import org.hamcrest.CoreMatchers;
 import org.jboss.arquillian.container.test.api.Deployment;
-
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
-
 import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,16 +14,17 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
+import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.equalToStory;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 
 @RunWith(Arquillian.class)
 @UsingDataSet("stories.xml")
@@ -120,5 +119,24 @@ public class TestStoryEJB {
         final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1);
 
         assertThat(dbStoriesPage1, is(empty()));
+    }
+
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetStoryById() {
+        final int storeId = 1;
+        final Story expectedStory = storyWithId(storeId);
+        final Story story = storyEJB.getById(storeId);
+
+        assertThat(story, CoreMatchers.is(instanceOf(Story.class)));
+        assertThat(story, is(equalToStory(expectedStory)));
+    }
+
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetStoryByNonExistentId() {
+        assertNull(storyEJB.getById(100));
     }
 }

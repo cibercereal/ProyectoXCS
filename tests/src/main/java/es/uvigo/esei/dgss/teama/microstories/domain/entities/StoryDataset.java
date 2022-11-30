@@ -1,14 +1,11 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -89,6 +86,7 @@ public class StoryDataset {
             return null;
         }
     }
+
     public static Story[] storiesLess() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
         try {
@@ -104,6 +102,7 @@ public class StoryDataset {
             return null;
         }
     }
+
     public static Story[] storiesSameDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
         try {
@@ -130,6 +129,7 @@ public class StoryDataset {
                 .limit(6)
                 .collect(Collectors.toList());
     }
+
     public static List<Story> recentStoriesLess() {
         return stream(storiesLess())
                 .filter(Story::isPublished)
@@ -137,6 +137,7 @@ public class StoryDataset {
                 .limit(4)
                 .collect(Collectors.toList());
     }
+
     public static List<Story> recentStoriesSameDate() {
         return stream(storiesSameDate())
                 .filter(Story::isPublished)
@@ -152,12 +153,25 @@ public class StoryDataset {
                 .limit(6)
                 .collect(Collectors.toList());
     }
-    
+
     public static List<Story> getStoriesSubListByText(String text, int indexI, int indexJ) {
-      return stream(stories())
-              .filter(story -> story.getTitle().contains(text) || story.getContent().contains(text))
-              .sorted(Comparator.comparing(Story::getDate).reversed())
-              .collect(Collectors.toList())
-              .subList(indexI, indexJ);
-  }
+        return stream(stories())
+                .filter(story -> story.getTitle().contains(text) || story.getContent().contains(text))
+                .sorted(Comparator.comparing(Story::getDate).reversed())
+                .collect(Collectors.toList())
+                .subList(indexI, indexJ);
+    }
+
+    /**
+     * Returns the first story in the list of stories whose id matches with the searched one.
+     *
+     * @param id The id of the story to search.
+     * @return The story with the id to search.
+     * @throws IllegalArgumentException The exception thrown when the story searched by its id is not found.
+     */
+    public static Story storyWithId(int id) {
+        return stream(Objects.requireNonNull(stories())).filter(story -> story.getId() == id)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
 }

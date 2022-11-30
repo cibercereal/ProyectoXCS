@@ -24,6 +24,12 @@ public class StoryEJB {
                 Story.class).setMaxResults(LIMIT_STORIES).getResultList();
     }
 
+    /**
+     * Search for a story by its primary key.
+     *
+     * @param id The story id to search.
+     * @return The story that corresponds with the search id.
+     */
     public Story getById(final int id) {
         return em.find(Story.class, id);
     }
