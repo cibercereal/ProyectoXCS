@@ -14,6 +14,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -100,8 +101,8 @@ public class TestStoryEJB {
     @ShouldMatchDataSet("stories.xml")
     public void testGetStoriesContainingText() {
         String text = "Aliquam";
-        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1);
-        final List<Story> dbStoriesPage2 = storyEJB.getStoriesByText(text, 2);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1, 9);
+        final List<Story> dbStoriesPage2 = storyEJB.getStoriesByText(text, 2, 9);
 
         List<Story> expectedStoriesPage1 = getStoriesSubListByText(text, 0, 9);
         List<Story> expectedStoriesPage2 = getStoriesSubListByText(text, 9, 18);
@@ -110,13 +111,20 @@ public class TestStoryEJB {
         assertThat(dbStoriesPage2, containsStoriesInOrder(expectedStoriesPage2));
     }
 
+    @Test(expected = EJBTransactionRolledbackException.class)
+    @UsingDataSet("stories.xml")
+    public void testGetNullStoriesContainingText() {
+        String text = "Aliquam";
+        storyEJB.getStoriesByText(text, 0, 0);
+    }
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
     public void testGetStoriesByTextNotFound() {
         String text = "text not found";
 
-        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1, 9);
 
         assertThat(dbStoriesPage1, is(empty()));
     }
