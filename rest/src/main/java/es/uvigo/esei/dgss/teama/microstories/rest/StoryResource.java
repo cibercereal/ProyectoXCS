@@ -4,19 +4,15 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import javax.ejb.EJB;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Resource that represents the stories in the application.
  *
- * @author Bruno Cruz González (bcgonzalez4) Brais Domínguez Álvarez (bdalvarez)
+ * @author Bruno Cruz González (bcgonzalez4) Brais Domínguez Álvarez (bdalvarez) Álvaro Suárez Feijoo (asfeijoo)
  */
 @Path("microstory")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -52,6 +48,28 @@ public class StoryResource {
             throw new BadRequestException();
         else
             return Response.ok(story).build();
+    }
+
+    /**
+     * Returns a list stories from a text.
+     *
+     * @param text       The id of the story to return.
+     * @param pageNumber The number of the page.
+     * @param maxItems   The maximum of stories to return by page.
+     * @return The list of stories.
+     */
+    @GET
+    public Response getStoryByText(
+            @QueryParam("contains") String text,
+            @DefaultValue("0") @QueryParam("pageNumber") int pageNumber,
+            @DefaultValue("10") @QueryParam("maxItems") int maxItems) {
+
+        List<Story> storyList = this.storyEJB.getStoriesByText(text, pageNumber, maxItems);
+
+        if (storyList == null)
+            throw new BadRequestException();
+        else
+            return Response.ok(storyList).build();
     }
 }
 
