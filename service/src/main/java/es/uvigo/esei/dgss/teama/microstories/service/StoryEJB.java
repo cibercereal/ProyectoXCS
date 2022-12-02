@@ -34,13 +34,19 @@ public class StoryEJB {
     }
 
     public List<Story> getStoriesByText(String text, int pageNumber, int maxItems) {
-        if (maxItems <= 0 || pageNumber <= 0) {
+        if (maxItems <= 0 || pageNumber < 0) {
             throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
         }
 
         Query query = em.createQuery("SELECT s FROM Story s WHERE s.title like :text OR s.content like :text ORDER BY s.date DESC, s.id ASC", Story.class);
         query.setParameter("text", "%" + text + "%");
-        query.setFirstResult((pageNumber - 1) * maxItems);
+
+        if(pageNumber == 0){
+            query.setFirstResult(0);
+        }else{
+            query.setFirstResult(pageNumber * maxItems);
+        }
+
         query.setMaxResults(maxItems);
 
         return query.getResultList();

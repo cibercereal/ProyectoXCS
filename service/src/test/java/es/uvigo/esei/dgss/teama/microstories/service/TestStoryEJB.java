@@ -101,8 +101,8 @@ public class TestStoryEJB {
     @ShouldMatchDataSet("stories.xml")
     public void testGetStoriesContainingText() {
         String text = "Aliquam";
-        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 1, 9);
-        final List<Story> dbStoriesPage2 = storyEJB.getStoriesByText(text, 2, 9);
+        final List<Story> dbStoriesPage1 = storyEJB.getStoriesByText(text, 0, 9);
+        final List<Story> dbStoriesPage2 = storyEJB.getStoriesByText(text, 1, 9);
 
         List<Story> expectedStoriesPage1 = getStoriesSubListByText(text, 0, 9);
         List<Story> expectedStoriesPage2 = getStoriesSubListByText(text, 9, 18);
