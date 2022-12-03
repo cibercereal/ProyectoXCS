@@ -34,13 +34,17 @@
                     <h:graphicImage id="microstories-logo" value="#{resource['img:microstories-logo.png']}"/>
                     <strong>μStories</strong>
                 </a>
-                <h:form class="form-inline mt-2 mt-md-0">
+                <h:form id="searchStories" class="form-inline mt-2 mt-md-0">
                     <h:inputText
+                            value="#{storyController.searchText}"
                             styleClass="form-control mr-sm-2"
                             a:placeholder="Search"
                             aria-label="Search"
                     />
-                    <h:commandButton value="Search" class="btn btn-outline-success my-2 my-sm-0"/>
+                    <h:commandButton
+                            value="Search"
+                            action="#{storyController.searchStories()}"
+                            class="btn btn-outline-success my-2 my-sm-0"/>
                 </h:form>
             </div>
         </div>

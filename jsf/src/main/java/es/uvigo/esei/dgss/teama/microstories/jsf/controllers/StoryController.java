@@ -15,6 +15,11 @@ import javax.inject.Named;
 @SessionScoped
 public class StoryController implements Serializable {
 
+  private static final int PAGE_NUMBER = 1;
+  private static final int MAX_ITEMS = 6;
+  private String searchText;
+  private List<Story> searchedStoriesByText;
+
   @EJB
   private StoryEJB storyEJB;
 
@@ -25,11 +30,27 @@ public class StoryController implements Serializable {
 
   @PostConstruct
   public void init() {
+    this.searchText = "";
+    this.searchedStoriesByText = new ArrayList<Story>();
   }
 
   public List<Story> getRecentStories() {
     return storyEJB.getRecentStories();
   }
+
+  public String searchStories() {
+    this.searchedStoriesByText = this.storyEJB.getStoriesByText(this.searchText, PAGE_NUMBER, MAX_ITEMS);
+    return "searchStories";
+  }
+
+  public String getSearchText() {
+    return searchText;
+  }
+
+  public void setSearchText(String searchText) {
+    this.searchText = searchText;
+  }
+
 
 }
 
