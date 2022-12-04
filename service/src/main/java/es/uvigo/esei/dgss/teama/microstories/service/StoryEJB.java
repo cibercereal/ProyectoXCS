@@ -1,13 +1,16 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -80,5 +83,16 @@ public class StoryEJB {
                         "and (s.content LIKE :t OR s.title Like :t) ",Story.class).setParameter("t", "%" + text + "%").setFirstResult((page - 1) * maxItems)
                 .setMaxResults(maxItems).getResultList();
 
+    }
+    /**
+     * Search story that matches with genre, theme and publication
+     *
+     * @param genre The story genre to search.
+     * @param theme The story theme to search.
+     * @param publication The story publication to search.
+     * @return The story that corresponds with the search text.
+     */
+    public List<Story> exploreStory(Genre genre, Theme theme, Date publication, int page, int maxItems){
+        return null;
     }
 }

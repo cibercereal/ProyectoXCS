@@ -1,13 +1,19 @@
 package es.uvigo.esei.dgss.teama.microstories.rest;
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Resource that represents the stories in the application.
@@ -65,6 +71,32 @@ public class StoryResource {
             @DefaultValue("10") @QueryParam("maxItems") int maxItems) {
 
         List<Story> storyList = this.storyEJB.getStoriesByText(text, pageNumber, maxItems);
+
+        if (storyList == null)
+            throw new BadRequestException();
+        else
+            return Response.ok(storyList).build();
+    }
+    /**
+     * Returns a list stories from a Genre, publication or theme.
+     *
+     * @param genre       The Genre of the story to return.
+     * @param theme      The Theme of the story to return.
+     * @param publication       The publication of the story to return.
+     * @param pageNumber The number of the page.
+     * @param maxItems   The maximum of stories to return by page.
+     * @return The list of stories.
+     */
+    @GET
+    public Response getStoryByText(
+            @QueryParam("genre") Genre genre,
+            @QueryParam("theme")Theme theme,
+            @QueryParam("publication") String publication,
+            @DefaultValue("0") @QueryParam("pageNumber") int pageNumber,
+            @DefaultValue("10") @QueryParam("maxItems") int maxItems) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        Date publicationDate = formatter.parse(publication);
+        List<Story> storyList = this.storyEJB.exploreStory(genre, theme, publicationDate,pageNumber,maxItems);
 
         if (storyList == null)
             throw new BadRequestException();

@@ -67,7 +67,6 @@ public class TestStoryEJB {
         assertThat(recentStories, containsStoriesInOrder(dbStories));
     }
 
-    //todo vacio , cuando hay menos de seis,mas de seis  con la misma fecha de publlicacion
     @Test
     @UsingDataSet("storiesEmpty.xml")
     @ShouldMatchDataSet("storiesEmpty.xml")
