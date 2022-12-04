@@ -51,4 +51,34 @@ public class StoryEJB {
 
         return query.getResultList();
     }
+
+    public int calculatePagesSearch(String text, int maxItems) {
+        long numStories = em
+                .createQuery("SELECT COUNT(s) FROM Story s WHERE s.published = TRUE and"
+                        + " (s.content LIKE :t or s.title LIKE :t) ", Long.class)
+                .setParameter("t", "%" + text + "%").getSingleResult();
+
+        if (numStories <= maxItems) {
+            return 1;
+        } else {
+            double pages = (double) numStories / maxItems;
+            return (int) Math.ceil(pages);
+        }
+    }
+    /**
+     * Search story that content or title contains a text
+     *
+     * @param text The story id to search.
+     * @return The story that corresponds with the search text.
+     */
+    public List<Story> searchStory(String text,int page,int maxItems){
+        if (maxItems <= 0 || page < 0) {
+            throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
+        }
+
+        return em.createQuery("SELECT s FROM Story  s WHERE s.published = TRUE " +
+                        "and (s.content LIKE :t OR s.title Like :t) ",Story.class).setParameter("t", "%" + text + "%").setFirstResult((page - 1) * maxItems)
+                .setMaxResults(maxItems).getResultList();
+
+    }
 }

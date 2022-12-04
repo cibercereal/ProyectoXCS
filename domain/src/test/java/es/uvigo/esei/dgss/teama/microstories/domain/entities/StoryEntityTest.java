@@ -3,6 +3,7 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -25,7 +26,7 @@ public class StoryEntityTest {
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
         final String author = "Antonio";
-        final Date date = new Date();
+        final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
 
         Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
@@ -114,7 +115,7 @@ public class StoryEntityTest {
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
         final String author = "Antonio";
-        final Date date = new Date();
+        final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
 
         new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);

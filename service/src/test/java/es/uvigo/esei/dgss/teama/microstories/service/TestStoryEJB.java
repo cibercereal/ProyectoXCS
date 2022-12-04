@@ -16,15 +16,17 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.equalToStory;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 
 @RunWith(Arquillian.class)
@@ -146,5 +148,46 @@ public class TestStoryEJB {
     @ShouldMatchDataSet("stories.xml")
     public void testGetStoryByNonExistentId() {
         assertNull(storyEJB.getById(100));
+    }
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testCalculatePagesSearch() {
+        String text = "Integer";
+        int maxItems = 4;
+        int pages = storyEJB.calculatePagesSearch(text, maxItems);
+
+        assertThat(pages, is(1));
+    }
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchStories(){
+        String text = "Integer";
+
+        int maxItems = 4;
+
+        List<Story> searc1 = storyEJB.searchStory(text,1,maxItems);
+        List<Story> searc2 = storyEJB.searchStory(text,2,maxItems);
+
+        assertThat(searc1.size(),is(2));
+        assertThat(searc2.size(),is(0));
+
+    }
+
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchStoriesTextNotExist(){
+        String text = "ahkajshdkjash";
+
+        int maxItems = 4;
+
+        List<Story> searc1 = storyEJB.searchStory(text,1,maxItems);
+        List<Story> searc2 = storyEJB.searchStory(text,2,maxItems);
+
+        assertThat(searc1.size(),is(0));
+        assertThat(searc2.size(),is(0));
+
     }
 }
