@@ -243,4 +243,31 @@ public class TestStoryEJB {
         assertThat(explore.get(0).getMainTheme() ,is(Theme.SCIENCE_FICTION));
 
     }
+    
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetTotalPagesSearchTextMoreThanOnePage() {
+      int totalPages = storyEJB.getTotalPagesSearchText("Aliquam", 9);
+
+      assertThat(totalPages, is(2));
+    }
+    
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetTotalPagesSearchTextSinglePage() {
+      int totalPages = storyEJB.getTotalPagesSearchText("magna", 9);
+
+      assertThat(totalPages, is(1));
+    }
+    
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testGetTotalPagesSearchTextNoResults() {
+      int totalPages = storyEJB.getTotalPagesSearchText("no results", 9);
+
+      assertThat(totalPages, is(1));
+    }
 }

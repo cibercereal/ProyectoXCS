@@ -52,13 +52,13 @@
 		<!-- Stories -->
 		<div class="album py-5 bg-light">
 			<div class="container">
-				
 
-					<c:choose>
-						<c:when test="#{not empty storyController.storiesFilteredByText}">
-							<h3 class="mt-5">Stories containing:
-								#{storyController.textFilter}</h3>
-							<div class="row">
+
+				<c:choose>
+					<c:when test="#{not empty storyController.storiesFilteredByText}">
+						<h3 class="mt-5">Stories containing:
+							#{storyController.textFilter}</h3>
+						<div class="row">
 							<ui:repeat value="#{storyController.storiesFilteredByText}"
 								var="story">
 								<!-- Story -->
@@ -94,14 +94,34 @@
 								</div>
 								<ui:include src="./storyModal.xhtml"></ui:include>
 							</ui:repeat>
-							</div>
-						</c:when>
-						
-						<c:otherwise>
-							<h3 class="mt-5 text-center">No stories found containing:
-								#{storyController.textFilter}</h3>
-						</c:otherwise>
-					</c:choose>			
+						</div>
+					</c:when>
+
+					<c:otherwise>
+						<h3 class="mt-5 text-center">No stories found containing:
+							#{storyController.textFilter}</h3>
+					</c:otherwise>
+				</c:choose>
+
+				<!-- Pagination -->
+				<h:form>
+					<nav aria-label="Page navigation">
+						<ul class="pagination">
+
+							<li class="#{storyController.currentPage le 0 ? 'page-item disabled' : 'page-item'}"><h:commandButton class="page-link"
+									value="Previous"
+									action="#{storyController.searchText(storyController.currentPage-1)}" disabled="#{storyController.currentPage le 0}"/>
+							</li>
+							<li class="page-item active"><span class="page-link"
+							aria-label="Next">#{storyController.currentPage+1}</span></li>
+							<li class="#{storyController.currentPage+1 ge storyController.totalPages ? 'page-item disabled' : 'page-item'}"><h:commandButton class="page-link"
+									value="Next"
+									action="#{storyController.searchText(storyController.currentPage+1)}" disabled="#{storyController.currentPage+1 ge storyController.totalPages}" />
+							</li>
+
+						</ul>
+					</nav>
+				</h:form>
 			</div>
 		</div>
 	</main>

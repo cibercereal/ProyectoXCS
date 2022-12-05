@@ -81,11 +81,13 @@ public class StoryController implements Serializable {
 
   public String searchText() {
     storyEJB.getStoriesByText(textFilter, 1, 9);
-
+    this.totalPages = storyEJB.getTotalPagesSearchText(textFilter, 9);
+    this.currentPage = 0;
     return "searchStories";
   }
 
   public void searchText(String page) {
+    this.currentPage = Integer.parseInt(page);
     storyEJB.getStoriesByText(textFilter, Integer.parseInt(page), 9);
   }
 

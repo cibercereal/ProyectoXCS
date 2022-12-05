@@ -192,4 +192,16 @@ public class StoryEJB {
     private Integer checkSize(Integer size) {
         return (size == null || size < 0) ? 10 : Math.min(size, 100);
     }
+    
+	public int getTotalPagesSearchText(String text, int maxItems) {
+		Query query = em.createQuery("SELECT COUNT(s) FROM Story s WHERE s.title like :text OR s.content like :text", Long.class);
+		query.setParameter("text", "%" + text + "%");
+
+		long numStories = (long) query.getSingleResult();
+
+		if (numStories <= maxItems) {
+			return 1;
+		}
+		return (int) Math.ceil(numStories / maxItems);
+	}
 }
