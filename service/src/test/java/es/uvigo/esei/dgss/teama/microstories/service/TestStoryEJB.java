@@ -1,9 +1,11 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
@@ -148,6 +150,7 @@ public class TestStoryEJB {
     public void testGetStoryByNonExistentId() {
         assertNull(storyEJB.getById(100));
     }
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
@@ -157,36 +160,5 @@ public class TestStoryEJB {
         int pages = storyEJB.calculatePagesSearch(text, maxItems);
 
         assertThat(pages, is(1));
-    }
-    @Test
-    @UsingDataSet("stories.xml")
-    @ShouldMatchDataSet("stories.xml")
-    public void testSearchStories(){
-        String text = "Integer";
-
-        int maxItems = 4;
-
-        List<Story> searc1 = storyEJB.searchStory(text,1,maxItems);
-        List<Story> searc2 = storyEJB.searchStory(text,2,maxItems);
-
-        assertThat(searc1.size(),is(2));
-        assertThat(searc2.size(),is(0));
-
-    }
-
-    @Test
-    @UsingDataSet("stories.xml")
-    @ShouldMatchDataSet("stories.xml")
-    public void testSearchStoriesTextNotExist(){
-        String text = "ahkajshdkjash";
-
-        int maxItems = 4;
-
-        List<Story> searc1 = storyEJB.searchStory(text,1,maxItems);
-        List<Story> searc2 = storyEJB.searchStory(text,2,maxItems);
-
-        assertThat(searc1.size(),is(0));
-        assertThat(searc2.size(),is(0));
-
     }
 }

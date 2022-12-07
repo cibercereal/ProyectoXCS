@@ -3,17 +3,14 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
-import java.util.Comparator;
+
 import java.util.stream.Collectors;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+
 /**
  * Dataset for Story class.
  *
@@ -177,7 +174,7 @@ public class StoryDataset {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static Story[] searchStories(String text) {
+    public static List<Story> searchStories(String text) {
         final List<Story> stories = new ArrayList<>();
 
         for (Story story : Objects.requireNonNull(stories())) {
@@ -186,6 +183,6 @@ public class StoryDataset {
                 stories.add(story);
             }
         }
-        return stories.toArray(new Story[stories.size()]);
+        return stories;
     }
 }
