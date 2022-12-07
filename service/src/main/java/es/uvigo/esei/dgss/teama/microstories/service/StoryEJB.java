@@ -84,6 +84,7 @@ public class StoryEJB {
                 .setMaxResults(maxItems).getResultList();
 
     }
+
     /**
      * Search story that matches with genre, theme and publication
      *
@@ -93,6 +94,18 @@ public class StoryEJB {
      * @return The story that corresponds with the search text.
      */
     public List<Story> exploreStory(Genre genre, Theme theme, Date publication, int page, int maxItems){
+        return null;
+    }
+
+    /**
+     * Search story that matches with genre, theme and publication
+     *
+     * @param genre The story genre to search.
+     * @param theme The story theme to search.
+     * @param publication The story publication to search.
+     * @return The story that corresponds with the search text.
+     */
+    public List<Story> exploreStory(Genre genre, Theme theme, String publication, int page, int maxItems){
         return null;
     }
 }
