@@ -1,6 +1,7 @@
 package es.uvigo.esei.dgss.teama.microstories.rest;
 
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
@@ -88,15 +89,14 @@ public class StoryResource {
      * @return The list of stories.
      */
     @GET
-    public Response getStoryByText(
+    public Response getStoryExplore(
             @QueryParam("genre") Genre genre,
             @QueryParam("theme")Theme theme,
-            @QueryParam("publication") String publication,
+            @QueryParam("publication") Publication publication,
             @DefaultValue("0") @QueryParam("pageNumber") int pageNumber,
-            @DefaultValue("10") @QueryParam("maxItems") int maxItems) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
-        Date publicationDate = formatter.parse(publication);
-        List<Story> storyList = this.storyEJB.exploreStory(genre, theme, publicationDate,pageNumber,maxItems);
+            @DefaultValue("10") @QueryParam("maxItems") int maxItems){
+
+        List<Story> storyList = this.storyEJB.exploreStory(genre, theme, publication,pageNumber,maxItems);
 
         if (storyList == null)
             throw new BadRequestException();

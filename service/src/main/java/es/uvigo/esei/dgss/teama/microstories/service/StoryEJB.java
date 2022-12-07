@@ -2,6 +2,7 @@ package es.uvigo.esei.dgss.teama.microstories.service;
 
 
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 
@@ -93,19 +94,7 @@ public class StoryEJB {
      * @param publication The story publication to search.
      * @return The story that corresponds with the search text.
      */
-    public List<Story> exploreStory(Genre genre, Theme theme, Date publication, int page, int maxItems){
-        return null;
-    }
-
-    /**
-     * Search story that matches with genre, theme and publication
-     *
-     * @param genre The story genre to search.
-     * @param theme The story theme to search.
-     * @param publication The story publication to search.
-     * @return The story that corresponds with the search text.
-     */
-    public List<Story> exploreStory(Genre genre, Theme theme, String publication, int page, int maxItems){
+    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems){
         return null;
     }
 }
