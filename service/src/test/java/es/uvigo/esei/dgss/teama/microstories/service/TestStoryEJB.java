@@ -1,6 +1,7 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
@@ -18,18 +19,18 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.equalToStory;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Arquillian.class)
 @UsingDataSet("stories.xml")
@@ -160,5 +161,52 @@ public class TestStoryEJB {
         int pages = storyEJB.calculatePagesSearch(text, maxItems);
 
         assertThat(pages, is(1));
+    }
+
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchStories() {
+        String text = "Integer";
+
+        int maxItems = 4;
+
+        List<Story> searc1 = storyEJB.searchStory(text, 1, maxItems);
+        List<Story> searc2 = storyEJB.searchStory(text, 2, maxItems);
+
+        assertThat(searc1.size(), is(2));
+        assertThat(searc2.size(), is(0));
+
+    }
+
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchStoriesTextNotExist() {
+        String text = "ahkajshdkjash";
+
+        int maxItems = 4;
+
+        List<Story> searc1 = storyEJB.searchStory(text, 1, maxItems);
+        List<Story> searc2 = storyEJB.searchStory(text, 2, maxItems);
+
+        assertThat(searc1.size(), is(0));
+        assertThat(searc2.size(), is(0));
+
+    }
+
+    @Test
+    @ShouldMatchDataSet(value = "stories.xml")
+    public void testFindStoryHottest() {
+        final Calendar cal = Calendar.getInstance();
+        cal.set(2022, Calendar.MAY, 1, 0, 0, 0);
+        final Date startDate = cal.getTime();
+        cal.set(Calendar.DAY_OF_MONTH, 30);
+        final Date referenceDate = cal.getTime();
+
+        final List<Story> expectedStories = hottestStories(Genre.POETRY, startDate, referenceDate, 0, 10);
+        final List<Story> queriedStories = storyEJB.findHottestStories(Genre.POETRY, startDate, referenceDate, 0, 10);
+
+        assertThat(expectedStories, containsStoriesInOrder(queriedStories));
     }
 }

@@ -4,7 +4,9 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 import org.junit.Test;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class StoryEntityTest {
 
     @Test
-    public void testStoryDataType(){
+    public void testStoryDataType() {
         final int id = 1;
         final String title = "Title Test";
         final String content = "Text Test";
@@ -44,7 +46,7 @@ public class StoryEntityTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryLengthNanoStory(){
+    public void testStoryLengthNanoStory() {
         final int id = 1;
         final String title = "Title Test";
         final String content = new String(new char[151]);
@@ -61,7 +63,7 @@ public class StoryEntityTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryLengthPoetryStory(){
+    public void testStoryLengthPoetryStory() {
         final int id = 1;
         final String title = "Title Test";
         final String content = new String(new char[501]);
@@ -76,7 +78,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryLengthStory(){
+    public void testStoryLengthStory() {
         final int id = 1;
         final String title = "Title Test";
         final String content = new String(new char[1001]);
@@ -91,7 +93,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullTitle(){
+    public void testStoryNullTitle() {
         final int id = 1;
         final String title = null;
         final String content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non eros nec purus scelerisque varius vitae non mauris. Nunc malesuada efficitur quam, quis rhoncus leo efficitur lacinia. Proin enim quam, faucibus nec leo eget, euismod tincidunt risus. Suspendisse tristique et tortor vitae feugiat. Nulla tristique semper diam at molestie. In cursus tempor sem quis ultrices. Vestibulum vestibulum purus non pulvinar aliquam. Morbi sit amet ipsum eu ex pulvinar accumsan at at dolor. Nunc eu auctor orci. Sed maximus metus dui, ut commodo nisi dignissim sit amet. Sed ut nunc elementum, gravida nibh at, volutpat dui. Quisque fringilla mi sapien, ac blandit risus tincidunt sit amet. Aenean pulvinar, felis a pellentesque aliquet, mi erat scelerisque dui, pellentesque molestie est ex non lectus. Curabitur rhoncus libero sem, id malesuada arcu volutpat a. Fusce feugiat enim in justo ornare, non condimentum magna dignissim. Morbi neque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -107,7 +109,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryLengthTitleMore70(){
+    public void testStoryLengthTitleMore70() {
         final int id = 1;
         final String title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non gravida lacus, et porta ligula. Integer id nisl ac risus fermentum malesuada nec id est. Maecenas quis tristique purus, in lacinia arcu. Cras placerat arcu erat, non sodales nisi blandit ut. Fusce ac magna posuere, dapibus nulla sit amet, pulvinar turpis. Morbi vitae diam sit amet felis pellentesque pharetra. Curabitur sollicitudin suscipit gravida. Duis vehicula nisi nunc. Pellentesque sodales bibendum sem. ";
         final String content = "Lorem ipsum dolor sit amet, consectetud tincidunt";
@@ -122,7 +124,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryEmptyTitle(){
+    public void testStoryEmptyTitle() {
         final int id = 1;
         final String title = "";
         final String content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non eros nec purus scelerisque varius vitae non mauris. Nunc malesuada efficitur quam, quis rhoncus leo efficitur lacinia. Proin enim quam, faucibus nec leo eget, euismod tincidunt risus. Suspendisse tristique et tortor vitae feugiat. Nulla tristique semper diam at molestie. In cursus tempor sem quis ultrices. Vestibulum vestibulum purus non pulvinar aliquam. Morbi sit amet ipsum eu ex pulvinar accumsan at at dolor. Nunc eu auctor orci. Sed maximus metus dui, ut commodo nisi dignissim sit amet. Sed ut nunc elementum, gravida nibh at, volutpat dui. Quisque fringilla mi sapien, ac blandit risus tincidunt sit amet. Aenean pulvinar, felis a pellentesque aliquet, mi erat scelerisque dui, pellentesque molestie est ex non lectus. Curabitur rhoncus libero sem, id malesuada arcu volutpat a. Fusce feugiat enim in justo ornare, non condimentum magna dignissim. Morbi neque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -138,7 +140,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullAuthor(){
+    public void testStoryNullAuthor() {
         final int id = 1;
         final String title = "Title test";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -154,7 +156,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryEmptyAuthor(){
+    public void testStoryEmptyAuthor() {
         final int id = 1;
         final String title = "";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -170,7 +172,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullContent(){
+    public void testStoryNullContent() {
         final int id = 1;
         final String title = "Title test";
         final String content = null;
@@ -186,7 +188,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryEmptyContent(){
+    public void testStoryEmptyContent() {
         final int id = 1;
         final String title = "";
         final String content = "";
@@ -202,7 +204,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullMainTheme(){
+    public void testStoryNullMainTheme() {
         final int id = 1;
         final String title = "Title test";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -218,7 +220,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullSecondaryTheme(){
+    public void testStoryNullSecondaryTheme() {
         final int id = 1;
         final String title = "Title test";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -234,7 +236,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullDate(){
+    public void testStoryNullDate() {
         final int id = 1;
         final String title = "Title test";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -250,7 +252,7 @@ public class StoryEntityTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testStoryNullGenre(){
+    public void testStoryNullGenre() {
         final int id = 1;
         final String title = "Title test";
         final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
@@ -263,5 +265,27 @@ public class StoryEntityTest {
 
         new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
+    }
+
+    @Test
+    public void testSetVisitDate() {
+        final int id = 1;
+        final String title = "Title 1";
+        final String content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non eros nec purus scelerisque varius vitae non mauris. Nunc malesuada efficitur quam, quis rhoncus leo efficitur lacinia. Proin enim quam, faucibus nec leo eget, euismod tincidunt risus. Suspendisse tristique et tortor vitae feugiat. Nulla tristique semper diam at molestie. In cursus tempor sem quis ultrices. Vestibulum vestibulum purus non pulvinar aliquam. Morbi sit amet ipsum eu ex pulvinar accumsan at at dolor. Nunc eu auctor orci. Sed maximus metus dui, ut commodo nisi dignissim sit amet. Sed ut nunc elementum, gravida nibh at, volutpat dui. Quisque fringilla mi sapien, ac blandit risus tincidunt sit amet. Aenean pulvinar, felis a pellentesque aliquet, mi erat scelerisque dui, pellentesque molestie est ex non lectus. Curabitur rhoncus libero sem, id malesuada arcu volutpat a. Fusce feugiat enim in justo ornare, non condimentum magna dignissim. Morbi neque tellus, viverra sit amet blandit eu, commodo at nisl. ";
+        final Genre genre = Genre.STORY;
+        final Theme mainTheme = Theme.ADVENTURE;
+        final Theme secondaryTheme = Theme.SUSPENSE;
+        final String author = "Antonio";
+        final Date date = new Date();
+        final boolean published = true;
+
+        final Story story = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+
+        final List<Date> visitDate = new ArrayList<>();
+        final Date newVisitDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+        visitDate.add(newVisitDate);
+        story.setVisitDate(visitDate);
+
+        assertThat(story.getVisitDate(), is(equalTo(visitDate)));
     }
 }

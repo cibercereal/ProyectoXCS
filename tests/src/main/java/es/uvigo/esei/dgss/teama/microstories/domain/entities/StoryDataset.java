@@ -3,13 +3,17 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
-
-import java.util.stream.Collectors;
 
 /**
  * Dataset for Story class.
@@ -79,6 +83,9 @@ public class StoryDataset {
                     new Story(49, new Timestamp(formatter.parse("2022-05-01 06:01:01").getTime()), "Lorem ipsum dolor sit", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.POETRY, Theme.SCIENCE_FICTION, Theme.HORROR, "Marta Estevez", true),
                     new Story(50, new Timestamp(formatter.parse("2022-05-01 07:01:01").getTime()), "In tincidunt congue turpis.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.SUSPENSE, Theme.HORROR, "Marta Estevez", true),
             };
+
+            addVisitDateToStories(formatter, stories);
+
             return stories;
         } catch (ParseException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -184,5 +191,62 @@ public class StoryDataset {
             }
         }
         return stories;
+    }
+
+    /**
+     * Get the stories that have been most read between startDate and endDate.
+     *
+     * @param genre    The genre of the microstory.
+     * @param initDate The initial date when start to search.
+     * @param endDate  Te end date to stop the search.
+     * @param page     The page number.
+     * @param size     The size of the page.
+     * @return The list of the most read stories.
+     */
+    public static List<Story> hottestStories(Genre genre, Date initDate, Date endDate, int page, int size) {
+        return stream(stories())
+                .filter(Story::isPublished)
+                .filter(s -> s.getGenre().equals(genre))
+                .filter(s -> s.getVisitCountInDateRange(initDate, endDate) > 0)
+                .sorted(Comparator.comparing(s -> s.getVisitCountInDateRange(initDate, endDate)))
+                .sorted((s1, s2) ->
+                        (int) (s2.getVisitCountInDateRange(initDate, endDate) - s1.getVisitCountInDateRange(initDate, endDate)))
+                .skip((long) page * size)
+                .limit(size)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Adds the value of the visit dates to the stories.
+     *
+     * @param formatter The date formatter.
+     * @param stories   The list of the stories.
+     * @throws ParseException The ParseException.
+     */
+    private static void addVisitDateToStories(SimpleDateFormat formatter, Story[] stories) throws ParseException {
+        List<Date> dateStory0 = new ArrayList<>();
+        dateStory0.add(formatter.parse("2022-02-10 23:31:01"));
+        dateStory0.add(formatter.parse("2022-05-01 10:01:01"));
+        dateStory0.add(formatter.parse("2022-05-22 11:40:01"));
+        stories[1].setVisitDate(dateStory0);
+
+        List<Date> dateStory1 = new ArrayList<>();
+        dateStory1.add(formatter.parse("2022-09-06 06:11:22"));
+        stories[2].setVisitDate(dateStory1);
+
+        List<Date> dateStory2 = new ArrayList<>();
+        dateStory2.add(formatter.parse("2022-05-30 01:01:01"));
+        dateStory2.add(formatter.parse("2022-10-21 02:20:01"));
+        stories[3].setVisitDate(dateStory2);
+
+        List<Date> dateStory3 = new ArrayList<>();
+        dateStory3.add(formatter.parse("2022-11-01 01:01:11"));
+        dateStory3.add(formatter.parse("2022-12-05 08:45:07"));
+        stories[4].setVisitDate(dateStory3);
+
+        List<Date> dateStory4 = new ArrayList<>();
+        dateStory4.add(formatter.parse("2022-06-08 15:01:30"));
+        dateStory4.add(formatter.parse("2022-05-01 01:01:01"));
+        stories[5].setVisitDate(dateStory4);
     }
 }

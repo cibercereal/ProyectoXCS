@@ -5,4 +5,10 @@
     <STORY id="2"  author="Juan Manuel Lopez" date="2008-02-01 01:01:01" title="Integer aliquam adipiscing lacus." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="POETRY" mainTheme="CHILD" secondaryTheme="HORROR" published="true"/>
     <STORY id="3"  author="Juan Manuel Lopez" date="2007-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true"/>
     <STORY id="4"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="sed pede. Cum sociis" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HORROR" secondaryTheme="HORROR" published="true"/>
+    <VISITDATE storyId="2" visitDate="2022-05-01 10:01:01" />
+    <VISITDATE storyId="2" visitDate="2022-05-22 11:40:01" />
+    <VISITDATE storyId="2" visitDate="2022-07-10 23:31:01" />
+    <VISITDATE storyId="3" visitDate="2022-09-06 06:11:22" />
+    <VISITDATE storyId="4" visitDate="2022-05-30 01:01:01" />
+    <VISITDATE storyId="4" visitDate="2022-10-21 02:20:01" />
 </dataset>

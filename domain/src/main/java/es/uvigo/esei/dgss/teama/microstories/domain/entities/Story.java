@@ -1,16 +1,22 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.TemporalType;
-import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The Story entity  represents the content of a story. This can be a Story, a nano story or a poem.
@@ -42,6 +48,14 @@ public class Story implements Serializable {
     private String author;
     private boolean published;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "VisitDate",
+            joinColumns = @JoinColumn(name = "storyId")
+    )
+    @Column(name = "visitDate")
+    private List<Date> visitDate;
+
     public Story() {
     }
 
@@ -51,7 +65,7 @@ public class Story implements Serializable {
             throw new IllegalArgumentException("Error: Content for a date cannot be null");
         }
 
-        if (title == null|| title.length() == 0) {
+        if (title == null || title.length() == 0) {
             throw new IllegalArgumentException("Error: Content for a title cannot be empty or null");
         }
 
@@ -141,6 +155,39 @@ public class Story implements Serializable {
 
     public boolean isPublished() {
         return published;
+    }
+
+    /**
+     * @return The list of the visit date.
+     */
+    @XmlTransient
+    public List<Date> getVisitDate() {
+        if (visitDate == null) visitDate = new ArrayList<>();
+        return visitDate;
+    }
+
+    /**
+     * Sets the list of visit date.
+     *
+     * @param visitDate The new list of visit date.
+     */
+    public void setVisitDate(List<Date> visitDate) {
+        this.visitDate = visitDate;
+    }
+
+    /**
+     * Get the number of visits in the range between startDate and endDate.
+     *
+     * @param startDate The start date.
+     * @param endDate   The end date.
+     * @return The number of visits in the range between startDate and endDate.
+     */
+    @XmlTransient
+    public long getVisitCountInDateRange(Date startDate, Date endDate) {
+        return getVisitDate().stream()
+                .filter(i -> i.after(startDate))
+                .filter(i -> i.before(endDate))
+                .count();
     }
 
     @Override

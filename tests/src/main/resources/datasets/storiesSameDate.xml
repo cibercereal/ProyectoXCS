@@ -8,4 +8,14 @@
     <STORY id="5"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="eleifend. Cras sed leo." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="ROMANCE" secondaryTheme="HORROR" published="true"/>
     <STORY id="6"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis" genre="NANOSTORY" mainTheme="SUSPENSE" secondaryTheme="HORROR" published="true"/>
     <STORY id="7" author="Juan Manuel Lopez"  date="2006-02-01 01:01:01" title="In nec orci. Donec" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true"/>
+    <VISITDATE storyId="2" visitDate="2022-05-01 10:01:01" />
+    <VISITDATE storyId="2" visitDate="2022-05-22 11:40:01" />
+    <VISITDATE storyId="2" visitDate="2022-07-10 23:31:01" />
+    <VISITDATE storyId="3" visitDate="2022-09-06 06:11:22" />
+    <VISITDATE storyId="4" visitDate="2022-05-30 01:01:01" />
+    <VISITDATE storyId="4" visitDate="2022-10-21 02:20:01" />
+    <VISITDATE storyId="5" visitDate="2022-11-01 01:01:11" />
+    <VISITDATE storyId="5" visitDate="2022-12-05 08:45:07" />
+    <VISITDATE storyId="6" visitDate="2022-06-08 15:01:30" />
+    <VISITDATE storyId="6" visitDate="2022-05-01 01:01:01" />
 </dataset>
