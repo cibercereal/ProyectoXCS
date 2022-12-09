@@ -30,8 +30,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
         assertThat(localStory.getId(), is(equalTo(id)));
         assertThat(localStory.getDate(), is(equalTo(date)));
@@ -44,7 +45,6 @@ public class StoryEntityTest {
         assertThat(localStory.isPublished(), is(equalTo(published)));
     }
 
-
     @Test(expected = IllegalArgumentException.class)
     public void testStoryLengthNanoStory() {
         final int id = 1;
@@ -56,11 +56,11 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
-
 
     @Test(expected = IllegalArgumentException.class)
     public void testStoryLengthPoetryStory() {
@@ -73,8 +73,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -88,8 +89,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -103,8 +105,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -119,8 +122,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -134,8 +138,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -150,8 +155,9 @@ public class StoryEntityTest {
         final String author = null;
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -166,8 +172,9 @@ public class StoryEntityTest {
         final String author = "";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -182,8 +189,9 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -198,8 +206,9 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -214,8 +223,9 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -230,8 +240,9 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -246,8 +257,9 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = null;
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -262,8 +274,26 @@ public class StoryEntityTest {
         final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testStoryNullUser() {
+        final int id = 1;
+        final String title = "Title test";
+        final String content = "Lneque tellus, viverra sit amet blandit eu, commodo at nisl. ";
+        final Genre genre = Genre.NANOSTORY;
+        final Theme mainTheme = Theme.HISTORIC;
+        final Theme secondaryTheme = Theme.SUSPENSE;
+        final String author = "Pepe";
+        final Date date = new Date();
+        final boolean published = true;
+        final User user = null;
+
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
     }
 
@@ -278,8 +308,9 @@ public class StoryEntityTest {
         final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
+        final User user = new User("user1", "12345");
 
-        final Story story = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
+        final Story story = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
 
         final List<Date> visitDate = new ArrayList<>();
         final Date newVisitDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);

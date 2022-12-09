@@ -14,6 +14,7 @@ import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +35,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(Arquillian.class)
 @UsingDataSet("stories.xml")
+@Ignore
 public class TestStoryEJB {
 
     @Inject

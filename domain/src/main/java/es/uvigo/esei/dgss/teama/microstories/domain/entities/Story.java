@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class Story implements Serializable {
     private Theme secondaryTheme;
 
     private String author;
+
     private boolean published;
 
     @ElementCollection
@@ -56,10 +58,14 @@ public class Story implements Serializable {
     @Column(name = "visitDate")
     private List<Date> visitDate;
 
+    @ManyToOne
+    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false)
+    private User user;
+
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published) throws IllegalArgumentException {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published, User user) throws IllegalArgumentException {
 
         if (date == null) {
             throw new IllegalArgumentException("Error: Content for a date cannot be null");
@@ -110,6 +116,10 @@ public class Story implements Serializable {
             throw new IllegalArgumentException("Error: Content for a author cannot exceed 255 characters");
         }
 
+        if (user == null) {
+            throw new IllegalArgumentException("Error: Content for a user cannot be null");
+        }
+
         this.id = id;
         this.date = date;
         this.title = title;
@@ -119,6 +129,7 @@ public class Story implements Serializable {
         this.secondaryTheme = secondaryTheme;
         this.author = author;
         this.published = published;
+        this.user = user;
     }
 
     public int getId() {
@@ -155,6 +166,14 @@ public class Story implements Serializable {
 
     public boolean isPublished() {
         return published;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
