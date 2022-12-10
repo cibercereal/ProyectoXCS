@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <dataset>
-    <STORY id="1"  author="Juan Manuel Lopez" date="2009-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="ROMANCE" secondaryTheme="HORROR" published="true"/>
-    <STORY id="2"  author="Juan Manuel Lopez" date="2008-02-01 01:01:01" title="Integer aliquam adipiscing lacus." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="POETRY" mainTheme="CHILD" secondaryTheme="HORROR" published="true"/>
-    <STORY id="3"  author="Juan Manuel Lopez" date="2007-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true"/>
-    <STORY id="4"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="sed pede. Cum sociis" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HORROR" secondaryTheme="HORROR" published="true"/>
+    <STORY id="1"  author="Juan Manuel Lopez" date="2009-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="NANOSTORY" mainTheme="ROMANCE" secondaryTheme="HORROR" published="true" login="user3"/>
+    <STORY id="2"  author="Juan Manuel Lopez" date="2008-02-01 01:01:01" title="Integer aliquam adipiscing lacus." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="POETRY" mainTheme="CHILD" secondaryTheme="HORROR" published="true" login="user3"/>
+    <STORY id="3"  author="Juan Manuel Lopez" date="2007-02-01 01:01:01" title="Aliquam ultrices iaculis odio." content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HISTORIC" secondaryTheme="HORROR" published="true" login="user3"/>
+    <STORY id="4"  author="Juan Manuel Lopez" date="2006-02-01 01:01:01" title="sed pede. Cum sociis" content="eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu," genre="STORY" mainTheme="HORROR" secondaryTheme="HORROR" published="true" login="user3"/>
     <VISITDATE storyId="2" visitDate="2022-05-01 10:01:01" />
     <VISITDATE storyId="2" visitDate="2022-05-22 11:40:01" />
     <VISITDATE storyId="2" visitDate="2022-07-10 23:31:01" />
