@@ -35,14 +35,14 @@ public class StoryEJB {
      * @return The story that corresponds with the search id.
      */
     public Story getById(final int id) {
-        Story story =em.find(Story.class, id);
+        Story story = em.find(Story.class, id);
         story.addVisit(new Date());
         em.persist(story);
         return story;
     }
 
     public List<Story> getStoriesByText(String text, int pageNumber, int maxItems) {
-        if (pageNumber < 0 || maxItems <= 0 ) {
+        if (pageNumber < 0 || maxItems <= 0) {
             throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
         }
 
@@ -78,6 +78,8 @@ public class StoryEJB {
      * Search story that content or title contains a text
      *
      * @param text The story id to search.
+     * @param page          The page number.
+     * @param maxItems      The size of the page.
      * @return The story that corresponds with the search text.
      */
     public List<Story> searchStory(String text, int page, int maxItems) {
@@ -97,6 +99,8 @@ public class StoryEJB {
      * @param genre       The story genre to search.
      * @param theme       The story theme to search.
      * @param publication The story publication to search.
+     * @param page          The page number.
+     * @param maxItems      The size of the page.
      * @return The story that corresponds with the search text.
      */
     public List<Story> exploreStory(Genre genre, Theme theme, Date publication, int page, int maxItems) {
@@ -109,9 +113,11 @@ public class StoryEJB {
      * @param genre       The story genre to search.
      * @param theme       The story theme to search.
      * @param publication The story publication to search.
+     * @param page        The page number.
+     * @param maxItems    The size of the page.
      * @return The story that corresponds with the search text.
      */
-    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems){
+    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems) {
         return null;
     }
 
@@ -131,12 +137,12 @@ public class StoryEJB {
         }
 
         return em.createQuery("SELECT s FROM Story s " +
-                "join s.visitDate vd " +
-                "WHERE s.published = TRUE " +
-                "AND s.genre = :genre " +
-                "AND vd > :startDate AND vd < :referenceDate " +
-                "GROUP BY s " +
-                "ORDER BY count(vd) DESC, s.id", Story.class)
+                        "join s.visitDate vd " +
+                        "WHERE s.published = TRUE " +
+                        "AND s.genre = :genre " +
+                        "AND vd > :startDate AND vd < :referenceDate " +
+                        "GROUP BY s " +
+                        "ORDER BY count(vd) DESC, s.id", Story.class)
                 .setFirstResult(getStartPagination(page, maxItems))
                 .setMaxResults(maxItems)
                 .setParameter("genre", genre)
