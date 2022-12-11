@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Stateless
 @PermitAll
@@ -96,29 +97,38 @@ public class StoryEJB {
     /**
      * Search story that matches with genre, theme and publication
      *
-     * @param genre       The story genre to search.
-     * @param theme       The story theme to search.
+     * @param genre The story genre to search.
+     * @param theme The story theme to search.
      * @param publication The story publication to search.
-     * @param page          The page number.
-     * @param maxItems      The size of the page.
      * @return The story that corresponds with the search text.
      */
-    public List<Story> exploreStory(Genre genre, Theme theme, Date publication, int page, int maxItems) {
-        return null;
-    }
+    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems){
 
-    /**
-     * Search story that matches with genre, theme and publication
-     *
-     * @param genre       The story genre to search.
-     * @param theme       The story theme to search.
-     * @param publication The story publication to search.
-     * @param page        The page number.
-     * @param maxItems    The size of the page.
-     * @return The story that corresponds with the search text.
-     */
-    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems) {
-        return null;
+        if (maxItems <= 0 || page < 0) {
+            throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
+        }
+        Date[] dates = new Date[2];
+        if(Objects.nonNull(publication)) {
+            dates = publication.getFrom();
+        }
+        Query query = em.createQuery("SELECT s"+
+                " FROM Story s WHERE ( :genre IS NULL OR s.genre = :genre) and" +
+                " (:theme IS NULL OR s.mainTheme = :theme OR s.secondaryTheme = :theme) and " +
+                " (:startDate IS NULL OR :endDate IS NULL OR s.date between :startDate and :endDate) ORDER BY s.date DESC", Story.class);
+        query.setParameter("genre",genre);
+        query.setParameter("theme", theme);
+        query.setParameter("starDate", dates[0]);
+        query.setParameter("endDate", dates[1]);
+
+        if(page == 0){
+            query.setFirstResult(0);
+        }else{
+            query.setFirstResult(page * maxItems);
+        }
+
+        query.setMaxResults(maxItems);
+
+        return query.getResultList();
     }
 
     /**

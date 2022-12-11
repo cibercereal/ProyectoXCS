@@ -2,8 +2,7 @@ package es.uvigo.esei.dgss.teama.microstories.service;
 
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.*;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
@@ -219,5 +218,29 @@ public class TestStoryEJB {
         final Story actualStory = storyEJB.getById(existentStory.getId());
 
         assertThat(actualStory, is(equalToStory(existentStory)));
+    }
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchExploreWithoutParameters(){
+        int maxItems = 4;
+
+        List<Story> explore = storyEJB.exploreStory(null,null,null,0,maxItems);
+
+        assertThat(explore.size(),is(4));
+
+    }
+    @Test
+    @UsingDataSet("stories.xml")
+    @ShouldMatchDataSet("stories.xml")
+    public void testSearchExploreWithParameters(){
+        int maxItems = 4;
+
+        List<Story> explore = storyEJB.exploreStory(Genre.NANOSTORY, Theme.SCIENCE_FICTION, Publication.THIS_YEAR,0,maxItems);
+
+        assertThat(explore.size(),is(1));
+        assertThat(explore.get(0).getGenre() ,is(Genre.NANOSTORY));
+        assertThat(explore.get(0).getMainTheme() ,is(Theme.SCIENCE_FICTION));
+
     }
 }
