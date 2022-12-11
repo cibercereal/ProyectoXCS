@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -184,9 +185,9 @@ public class Story implements Serializable {
      */
     @XmlTransient
     public List<Date> getVisitDate() {
-        if (visitDate == null) visitDate = new ArrayList<>();
-        return visitDate;
+        return Collections.unmodifiableList(this.visitDate);
     }
+
 
     /**
      * Sets the list of visit date.
@@ -211,7 +212,13 @@ public class Story implements Serializable {
                 .filter(i -> i.before(endDate))
                 .count();
     }
+    public void addVisit(Date date){
+        if(visitDate == null){
+            visitDate = new ArrayList<>();
+        }
+        visitDate.add(date);
 
+    }
     @Override
     public String toString() {
         return "Story{" +

@@ -29,13 +29,16 @@ public class StoryEJB {
     }
 
     /**
-     * Search for a story by its primary key.
+     * Search for a story by its primary key and add visit into table VISITDATE.
      *
      * @param id The story id to search.
      * @return The story that corresponds with the search id.
      */
     public Story getById(final int id) {
-        return em.find(Story.class, id);
+        Story story =em.find(Story.class, id);
+        story.addVisit(new Date());
+        em.persist(story);
+        return story;
     }
 
     public List<Story> getStoriesByText(String text, int pageNumber, int maxItems) {

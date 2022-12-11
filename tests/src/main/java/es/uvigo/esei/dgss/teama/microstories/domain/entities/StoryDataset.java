@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toSet;
  * @author Bruno Cruz González (bcgonzalez4)
  */
 public class StoryDataset {
-
+    public static final int STORY_ID = 2;
     public static Story[] stories(String... logins) {
         final Set<String> loginSet = stream(logins).collect(toSet());
 
@@ -248,5 +248,9 @@ public class StoryDataset {
         dateStory4.add(formatter.parse("2022-06-08 15:01:30"));
         dateStory4.add(formatter.parse("2022-05-01 01:01:01"));
         stories[5].setVisitDate(dateStory4);
+    }
+
+    public static Story existentStory() {
+        return storyWithId(STORY_ID);
     }
 }

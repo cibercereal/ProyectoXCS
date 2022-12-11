@@ -211,4 +211,13 @@ public class TestStoryEJB {
 
         assertThat(expectedStories, containsStoriesInOrder(queriedStories));
     }
+    @Test
+    @ShouldMatchDataSet(value = { "stories.xml", "stories-new-visit.xml" }, excludeColumns = "VISITDATE.visitDate")
+    public void testGetStory() {
+        final Story existentStory = existentStory();
+
+        final Story actualStory = storyEJB.getById(existentStory.getId());
+
+        assertThat(actualStory, is(equalToStory(existentStory)));
+    }
 }
