@@ -4,6 +4,7 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.User;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
 import javax.annotation.PostConstruct;

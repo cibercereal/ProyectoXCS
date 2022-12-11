@@ -1,6 +1,9 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -58,8 +61,8 @@ public class Story implements Serializable {
     @Column(name = "visitDate")
     private List<Date> visitDate;
 
-    @ManyToOne
-    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 
     public Story() {

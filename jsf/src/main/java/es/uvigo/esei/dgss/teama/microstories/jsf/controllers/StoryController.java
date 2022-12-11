@@ -14,7 +14,7 @@ import javax.inject.Named;
 @Named(value = "storyController")
 @SessionScoped
 public class StoryController implements Serializable {
-
+  Story selectedStory;
   private static final int PAGE_NUMBER = 1;
   private static final int MAX_ITEMS = 6;
   private String searchText;
@@ -50,7 +50,16 @@ public class StoryController implements Serializable {
   public void setSearchText(String searchText) {
     this.searchText = searchText;
   }
-
+  public String updateSelectedStory(int id) {
+    this.selectedStory = storyEJB.getById(id);
+    return "storyModal";
+  }
+  public Story getSelectedStory() {
+    return selectedStory;
+  }
+  public String returnIndex(){
+    return "index";
+  }
 
 }
 

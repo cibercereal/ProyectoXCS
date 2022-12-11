@@ -24,7 +24,7 @@ public class User implements Serializable {
     @Column(length = 70)
     private String login;
 
-    @Column(length = 70, nullable = false)
+    @Column(length = 70)
     private String password;
 
     @OneToMany(
@@ -32,7 +32,7 @@ public class User implements Serializable {
             targetEntity = Story.class,
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private Collection<Story> stories;
 
