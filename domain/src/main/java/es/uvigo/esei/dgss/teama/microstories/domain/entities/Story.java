@@ -1,21 +1,6 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.ConstraintMode;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +15,7 @@ import java.util.List;
  * @author Julio Patricio Da Silva (jpsilva) Brais Domínguez Álvarez (bdalvarez)
  */
 @Entity
+@Table(name = "story")
 public class Story implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,14 +42,14 @@ public class Story implements Serializable {
 
     @ElementCollection
     @CollectionTable(
-            name = "VisitDate",
+            name = "visitDate",
             joinColumns = @JoinColumn(name = "storyId")
     )
     @Column(name = "visitDate")
     private List<Date> visitDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false,foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 
     public Story() {
@@ -212,13 +198,15 @@ public class Story implements Serializable {
                 .filter(i -> i.before(endDate))
                 .count();
     }
-    public void addVisit(Date date){
-        if(visitDate == null){
+
+    public void addVisit(Date date) {
+        if (visitDate == null) {
             visitDate = new ArrayList<>();
         }
         visitDate.add(date);
 
     }
+
     @Override
     public String toString() {
         return "Story{" +

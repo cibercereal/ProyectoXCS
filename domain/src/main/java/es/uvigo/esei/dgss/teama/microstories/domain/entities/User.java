@@ -1,11 +1,6 @@
 package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -16,6 +11,7 @@ import java.util.Collection;
  * @author Álvaro Suárez Feijoo (asfeijoo)
  */
 @Entity
+@Table(name = "user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
