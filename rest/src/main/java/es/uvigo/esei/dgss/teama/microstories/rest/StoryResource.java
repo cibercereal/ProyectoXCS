@@ -103,5 +103,36 @@ public class StoryResource {
         else
             return Response.ok(storyList).build();
     }
+    
+    /**
+     * Find the stories that have been most read between the given dates.
+     *
+     * @param genre      The Genre of the story to return.
+     * @param startDateString      The date when start to search.
+     * @param referenceDateString  The date on which the query is made.
+     * @param pageNumber The number of the page.
+     * @param maxItems   The maximum of stories to return by page.
+     * @return The list of the most read stories.
+     * @throws ParseException if there is an error while parsing the dates.
+     */
+    @GET
+    @Path("hottest")
+    public Response findHottestStories(
+            @QueryParam("genre") Genre genre,
+            @QueryParam("startDate") String startDateString,
+            @QueryParam("referenceDate") String referenceDateString,
+            @DefaultValue("0") @QueryParam("pageNumber") int pageNumber,
+            @DefaultValue("10") @QueryParam("maxItems") int maxItems) throws ParseException{
+
+    	Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString + " 00:00:00");
+		Date referenceDate = new SimpleDateFormat("yyyy-MM-dd").parse(referenceDateString + " 23:59:59");
+		
+    	List<Story> storyList = this.storyEJB.findHottestStories(genre, startDate, referenceDate, pageNumber, maxItems);
+
+        if (storyList == null)
+            throw new BadRequestException();
+        else
+            return Response.ok(storyList).build();
+    }
 }
 
