@@ -193,6 +193,13 @@ public class StoryEJB {
         return (size == null || size < 0) ? 10 : Math.min(size, 100);
     }
     
+    /**
+     * Returns the total number of pages that the results of a text search will fill.
+     *
+     * @param text The text that is used in the query.
+     * @param maxItems The size of the page.
+     * @return The total number of pages.
+     */
 	public int getTotalPagesSearchText(String text, int maxItems) {
 		Query query = em.createQuery("SELECT COUNT(s) FROM Story s WHERE s.title like :text OR s.content like :text", Long.class);
 		query.setParameter("text", "%" + text + "%");

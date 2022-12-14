@@ -1,13 +1,10 @@
 package es.uvigo.esei.dgss.teama.microstories.jsf.controllers;
 
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,7 +15,7 @@ import javax.inject.Named;
 @SessionScoped
 public class StoryController implements Serializable {
   Story selectedStory;
-  private static final int PAGE_NUMBER = 1;
+  private static final int PAGE_NUMBER = 0;
   private static final int MAX_ITEMS = 6;
   private String searchText;
   private List<Story> searchedStoriesByText;
@@ -28,9 +25,6 @@ public class StoryController implements Serializable {
   
   private int currentPage;
   private int totalPages;
-  private String textFilter;
-  
-  private List<Story> storiesFilteredByText = new ArrayList<>();
  
 
   public StoryController() {
@@ -63,37 +57,25 @@ public class StoryController implements Serializable {
     this.totalPages = totalPages;
   }
 
-  public String getTextFilter() {
-    return textFilter;
+  public List<Story> getSearchedStoriesByText() {
+	return searchedStoriesByText;
   }
 
-  public void setTextFilter(String textFilter) {
-    this.textFilter = textFilter;
-  }
-
-  public List<Story> getStoriesFilteredByText() {
-    return storiesFilteredByText;
-  }
-
-  public void setStoriesFilteredByText(List<Story> storiesFilteredByText) {
-    this.storiesFilteredByText = storiesFilteredByText;
-  }
-
-  public String searchText() {
-    storyEJB.getStoriesByText(textFilter, 1, 9);
-    this.totalPages = storyEJB.getTotalPagesSearchText(textFilter, 9);
-    this.currentPage = 0;
-    return "searchStories";
-  }
-
-  public void searchText(String page) {
-    this.currentPage = Integer.parseInt(page);
-    storyEJB.getStoriesByText(textFilter, Integer.parseInt(page), 9);
+  public void setSearchedStoriesByText(List<Story> searchedStoriesByText) {
+	this.searchedStoriesByText = searchedStoriesByText;
   }
 
   public String searchStories() {
-    this.searchedStoriesByText = this.storyEJB.getStoriesByText(this.searchText, PAGE_NUMBER, MAX_ITEMS);
-    return "searchStories";
+	this.searchedStoriesByText = this.storyEJB.getStoriesByText(this.searchText, PAGE_NUMBER, MAX_ITEMS);
+	this.totalPages = storyEJB.getTotalPagesSearchText(this.searchText, MAX_ITEMS);
+	return "searchStories";
+  }
+  
+  public String searchStories(String page) {
+	this.searchedStoriesByText = this.storyEJB.getStoriesByText(this.searchText, Integer.parseInt(page), MAX_ITEMS);
+	this.totalPages = storyEJB.getTotalPagesSearchText(this.searchText, MAX_ITEMS);
+	this.currentPage = Integer.parseInt(page);
+	return "searchStories";
   }
 
   public String getSearchText() {
