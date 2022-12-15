@@ -30,6 +30,7 @@ public class StoryExploreController implements Serializable {
     private String selectedDate;
     private Publication selectedPublication;
     private List<Story> exploredStories;
+    private Story selectedStory;
 
 
     public StoryExploreController() {
@@ -48,8 +49,12 @@ public class StoryExploreController implements Serializable {
     public String exploreStories() {
         this.exploredStories = this.storyEJB.exploreStory(this.selectedGenre,
                 this.selectedTheme, this.selectedPublication, PAGE_NUMBER, MAX_ITEMS);
-        System.out.println(this.exploredStories);
         return "explore";
+    }
+
+    public String viewStory(int id) {
+        this.selectedStory = storyEJB.getById(id);
+        return "storyModalExplore";
     }
 
     public String formatLowerCase(String text) {
@@ -90,6 +95,27 @@ public class StoryExploreController implements Serializable {
 
     public Publication[] getListPublication() {
         return Publication.values();
+    }
+
+    public List<Story> getExploredStories() {
+        return this.exploredStories;
+    }
+
+    public void setExploredStories(List<Story> exploredStories) {
+        this.exploredStories = exploredStories;
+    }
+
+
+    public Story getSelectedStory() {
+        return this.selectedStory;
+    }
+
+    public void setSelectedStory(Story selectedStory) {
+        this.selectedStory = selectedStory;
+    }
+
+    public String goBack(){
+        return "explore";
     }
 
 }

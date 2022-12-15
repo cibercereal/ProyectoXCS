@@ -117,13 +117,13 @@ public class StoryEJB {
                 " (:startDate IS NULL OR :endDate IS NULL OR s.date between :startDate and :endDate) ORDER BY s.date DESC", Story.class);
         query.setParameter("genre",genre);
         query.setParameter("theme", theme);
-        query.setParameter("starDate", dates[0]);
+        query.setParameter("startDate", dates[0]);
         query.setParameter("endDate", dates[1]);
 
         if(page == 0){
             query.setFirstResult(0);
         }else{
-            query.setFirstResult(page * maxItems);
+            query.setFirstResult((page-1) * maxItems);
         }
 
         query.setMaxResults(maxItems);
