@@ -5,6 +5,7 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.User;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.TestPrincipal;
 import org.hamcrest.CoreMatchers;
@@ -298,6 +299,36 @@ public class TestStoryEJB {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    @ShouldMatchDataSet(value = "stories-edit.xml", excludeColumns = "visitdate.visitDate")
+    public void testModifyStoryData() {
+        String username = "user1";
+        principal.setName(username);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        try {
+            Date date = formatter.parse("2006-02-01 01:01:01");
+            final Story story = new Story(1, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true, new User(username, "827ccb0eea8a706c4c34a16891f84e7b"));
+            asAuthor.run(() -> this.storyEJB.editStory(1, story));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test(expected = EJBTransactionRolledbackException.class)
+    @ShouldMatchDataSet("stories.xml")
+    public void testModifyNonExistentStory() {
+        String username = "user1";
+        principal.setName(username);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+
+        try {
+            Date date = formatter.parse("2006-02-01 01:01:01");
+            final Story story = new Story(55, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true, new User(username, "827ccb0eea8a706c4c34a16891f84e7b"));
+            asAuthor.run(() -> this.storyEJB.editStory(102, story));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

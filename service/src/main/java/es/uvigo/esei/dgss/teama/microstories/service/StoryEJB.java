@@ -9,6 +9,7 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.User;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJBAccessException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -182,6 +183,27 @@ public class StoryEJB {
         String currentUsername = currentUser.getName();
         Story story = new Story(date, title, content, genre, mainTheme, secondaryTheme, currentUsername, published, getUserByLogin(currentUsername));
         em.persist(story);
+    }
+
+    /**
+     * Edit a story.
+     *
+     * @param id    The story id.
+     * @param story The story to modify.
+     * @return The modified story.
+     */
+    @RolesAllowed("user")
+    public Story editStory(int id, Story story) {
+        String login = currentUser.getName();
+        if (id < 1) {
+            throw new IllegalArgumentException();
+        }
+
+        if (login.equals(story.getUser().getLogin())) {
+            return em.merge(story);
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     /**
