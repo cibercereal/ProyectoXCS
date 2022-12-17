@@ -43,11 +43,11 @@ CREATE TABLE `user`
 
 LOCK TABLES `user` WRITE;
 INSERT INTO `user`
-VALUES ('user1', '12345', 'author'),
-       ('user2', '12345', 'author'),
-       ('user3', '12345', 'author'),
-       ('user4', '12345', 'author'),
-       ('user5', '12345', 'author');
+VALUES ('user1', '827ccb0eea8a706c4c34a16891f84e7b', 'author'),
+       ('user2', '827ccb0eea8a706c4c34a16891f84e7b', 'author'),
+       ('user3', '827ccb0eea8a706c4c34a16891f84e7b', 'author'),
+       ('user4', '827ccb0eea8a706c4c34a16891f84e7b', 'author'),
+       ('user5', '827ccb0eea8a706c4c34a16891f84e7b', 'author');
 UNLOCK TABLES;
 
 --
