@@ -31,6 +31,7 @@ CREATE TABLE `user`
 (
     `login`    varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
     `password` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
     PRIMARY KEY (`login`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -42,11 +43,11 @@ CREATE TABLE `user`
 
 LOCK TABLES `user` WRITE;
 INSERT INTO `user`
-VALUES ('user1', '12345'),
-       ('user2', '12345'),
-       ('user3', '12345'),
-       ('user4', '12345'),
-       ('user5', '12345');
+VALUES ('user1', '12345', 'author'),
+       ('user2', '12345', 'author'),
+       ('user3', '12345', 'author'),
+       ('user4', '12345', 'author'),
+       ('user5', '12345', 'author');
 UNLOCK TABLES;
 
 --

@@ -1,11 +1,13 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
-import es.uvigo.esei.dgss.teama.microstories.domain.entities.*;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
+import es.uvigo.esei.dgss.teama.microstories.service.util.security.TestPrincipal;
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
@@ -17,11 +19,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.equalToStory;
@@ -39,6 +45,12 @@ public class TestStoryEJB {
 
     @Inject
     private StoryEJB storyEJB;
+
+    @Inject
+    private TestPrincipal principal;
+
+    @EJB(beanName = "author-caller")
+    private RoleCaller asAuthor;
 
     @Deployment
     public static Archive<?> createDeployment() {
@@ -210,8 +222,9 @@ public class TestStoryEJB {
 
         assertThat(expectedStories, containsStoriesInOrder(queriedStories));
     }
+
     @Test
-    @ShouldMatchDataSet(value = { "stories.xml", "stories-new-visit.xml" }, excludeColumns = "VISITDATE.visitDate")
+    @ShouldMatchDataSet(value = {"stories.xml", "stories-new-visit.xml"}, excludeColumns = "VISITDATE.visitDate")
     public void testGetStory() {
         final Story existentStory = existentStory();
 
@@ -219,55 +232,72 @@ public class TestStoryEJB {
 
         assertThat(actualStory, is(equalToStory(existentStory)));
     }
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
-    public void testSearchExploreWithoutParameters(){
+    public void testSearchExploreWithoutParameters() {
         int maxItems = 4;
 
-        List<Story> explore = storyEJB.exploreStory(null,null,null,0,maxItems);
+        List<Story> explore = storyEJB.exploreStory(null, null, null, 0, maxItems);
 
-        assertThat(explore.size(),is(4));
+        assertThat(explore.size(), is(4));
 
     }
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
-    public void testSearchExploreWithParameters(){
+    public void testSearchExploreWithParameters() {
         int maxItems = 4;
 
-        List<Story> explore = storyEJB.exploreStory(Genre.NANOSTORY, Theme.SCIENCE_FICTION, Publication.THIS_YEAR,0,maxItems);
+        List<Story> explore = storyEJB.exploreStory(Genre.NANOSTORY, Theme.SCIENCE_FICTION, Publication.THIS_YEAR, 0, maxItems);
 
-        assertThat(explore.size(),is(1));
-        assertThat(explore.get(0).getGenre() ,is(Genre.NANOSTORY));
-        assertThat(explore.get(0).getMainTheme() ,is(Theme.SCIENCE_FICTION));
+        assertThat(explore.size(), is(1));
+        assertThat(explore.get(0).getGenre(), is(Genre.NANOSTORY));
+        assertThat(explore.get(0).getMainTheme(), is(Theme.SCIENCE_FICTION));
 
     }
-    
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
     public void testGetTotalPagesSearchTextMoreThanOnePage() {
-      int totalPages = storyEJB.getTotalPagesSearchText("Aliquam", 9);
+        int totalPages = storyEJB.getTotalPagesSearchText("Aliquam", 9);
 
-      assertThat(totalPages, is(2));
+        assertThat(totalPages, is(2));
     }
-    
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
     public void testGetTotalPagesSearchTextSinglePage() {
-      int totalPages = storyEJB.getTotalPagesSearchText("magna", 9);
+        int totalPages = storyEJB.getTotalPagesSearchText("magna", 9);
 
-      assertThat(totalPages, is(1));
+        assertThat(totalPages, is(1));
     }
-    
+
     @Test
     @UsingDataSet("stories.xml")
     @ShouldMatchDataSet("stories.xml")
     public void testGetTotalPagesSearchTextNoResults() {
-      int totalPages = storyEJB.getTotalPagesSearchText("no results", 9);
+        int totalPages = storyEJB.getTotalPagesSearchText("no results", 9);
 
-      assertThat(totalPages, is(1));
+        assertThat(totalPages, is(1));
+    }
+
+    @Test
+    @ShouldMatchDataSet(value = "stories-add.xml", excludeColumns = "visitdate.visitDate")
+    public void testCreateStory() {
+        String username = "Marta Estevez";
+        principal.setName(username);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        try {
+            Date date = formatter.parse("2021-04-01 01:01:01");
+            asAuthor.run(() -> this.storyEJB.createStory(date, "In tincidunt congue turpis.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.STORY, Theme.ADVENTURE, Theme.HORROR, true));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 }

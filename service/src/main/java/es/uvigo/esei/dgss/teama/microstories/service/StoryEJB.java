@@ -5,13 +5,16 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.User;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Calendar;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +25,9 @@ public class StoryEJB {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Inject
+    private Principal currentUser;
 
     public List<Story> getRecentStories() {
         final int LIMIT_STORIES = 6;
@@ -78,9 +84,9 @@ public class StoryEJB {
     /**
      * Search story that content or title contains a text
      *
-     * @param text The story id to search.
-     * @param page          The page number.
-     * @param maxItems      The size of the page.
+     * @param text     The story id to search.
+     * @param page     The page number.
+     * @param maxItems The size of the page.
      * @return The story that corresponds with the search text.
      */
     public List<Story> searchStory(String text, int page, int maxItems) {
@@ -97,33 +103,33 @@ public class StoryEJB {
     /**
      * Search story that matches with genre, theme and publication
      *
-     * @param genre The story genre to search.
-     * @param theme The story theme to search.
+     * @param genre       The story genre to search.
+     * @param theme       The story theme to search.
      * @param publication The story publication to search.
      * @return The story that corresponds with the search text.
      */
-    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems){
+    public List<Story> exploreStory(Genre genre, Theme theme, Publication publication, int page, int maxItems) {
 
         if (maxItems <= 0 || page < 0) {
             throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
         }
         Date[] dates = new Date[2];
-        if(Objects.nonNull(publication)) {
+        if (Objects.nonNull(publication)) {
             dates = publication.getFrom();
         }
-        Query query = em.createQuery("SELECT s"+
+        Query query = em.createQuery("SELECT s" +
                 " FROM Story s WHERE ( :genre IS NULL OR s.genre = :genre) and" +
                 " (:theme IS NULL OR s.mainTheme = :theme OR s.secondaryTheme = :theme) and " +
                 " (:startDate IS NULL OR :endDate IS NULL OR s.date between :startDate and :endDate) ORDER BY s.date DESC", Story.class);
-        query.setParameter("genre",genre);
+        query.setParameter("genre", genre);
         query.setParameter("theme", theme);
         query.setParameter("startDate", dates[0]);
         query.setParameter("endDate", dates[1]);
 
-        if(page == 0){
+        if (page == 0) {
             query.setFirstResult(0);
-        }else{
-            query.setFirstResult((page-1) * maxItems);
+        } else {
+            query.setFirstResult((page - 1) * maxItems);
         }
 
         query.setMaxResults(maxItems);
@@ -161,6 +167,34 @@ public class StoryEJB {
     }
 
     /**
+     * Creates a story.
+     *
+     * @param date           The date when the story is created.
+     * @param title          The title of the story.
+     * @param content        The content of the story.
+     * @param genre          The genre of the story.
+     * @param mainTheme      The main theme of the story.
+     * @param secondaryTheme The secondary theme of the story.
+     * @param published      Indicates if the story has been published.
+     */
+    @RolesAllowed("author")
+    public void createStory(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, Boolean published) {
+        String currentUsername = currentUser.getName();
+        Story story = new Story(date, title, content, genre, mainTheme, secondaryTheme, currentUsername, published, getUserByLogin(currentUsername));
+        em.persist(story);
+    }
+
+    /**
+     * Search for a user by their login.
+     *
+     * @param login The login to find.
+     * @return The user that matches the indicated login.
+     */
+    public User getUserByLogin(String login) {
+        return em.find(User.class, login);
+    }
+
+    /**
      * Validates that both the page and the page size are correct values and returns the number where to start the pagination.
      *
      * @param page The page number to search.
@@ -192,23 +226,23 @@ public class StoryEJB {
     private Integer checkSize(Integer size) {
         return (size == null || size < 0) ? 10 : Math.min(size, 100);
     }
-    
+
     /**
      * Returns the total number of pages that the results of a text search will fill.
      *
-     * @param text The text that is used in the query.
+     * @param text     The text that is used in the query.
      * @param maxItems The size of the page.
      * @return The total number of pages.
      */
-	public int getTotalPagesSearchText(String text, int maxItems) {
-		Query query = em.createQuery("SELECT COUNT(s) FROM Story s WHERE s.title like :text OR s.content like :text", Long.class);
-		query.setParameter("text", "%" + text + "%");
+    public int getTotalPagesSearchText(String text, int maxItems) {
+        Query query = em.createQuery("SELECT COUNT(s) FROM Story s WHERE s.title like :text OR s.content like :text", Long.class);
+        query.setParameter("text", "%" + text + "%");
 
-		long numStories = (long) query.getSingleResult();
+        long numStories = (long) query.getSingleResult();
 
-		if (numStories <= maxItems) {
-			return 1;
-		}
-		return (int) Math.ceil(numStories / maxItems);
-	}
+        if (numStories <= maxItems) {
+            return 1;
+        }
+        return (int) Math.ceil(numStories / maxItems);
+    }
 }
