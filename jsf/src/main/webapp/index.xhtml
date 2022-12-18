@@ -37,44 +37,7 @@
 <h:body>
 
     <!-- Header -->
-    <header>
-        <div class="navbar navbar-dark bg-dark shadow-sm">
-            <div class="container d-flex justify-content-between">
-                <a
-                        href="./index.xhtml"
-                        class="navbar-brand d-flex align-items-center"
-                >
-                    <h:graphicImage id="microstories-logo" value="#{resource['img:microstories-logo.png']}"/>
-                    <strong>μStories</strong>
-                </a>
-                <h:form id="searchStories" class="form-inline mt-2 mt-md-0">
-                    <h:inputText
-                            value="#{storyController.searchText}"
-                            styleClass="form-control mr-sm-2"
-                            a:placeholder="Search"
-                            aria-label="Search"
-                    />
-                    <h:commandButton
-                            value="Search"
-                            action="#{storyController.searchStories()}"
-                            class="btn btn-outline-success my-2 my-sm-0"/>
-                </h:form>
-                <h:form rendered="#{not empty userController.username}">
-                	<ul class="navbar-nav">
-         				<li class="nav-item dropdown">
-        					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          					#{userController.username}
-        					</a>
-        			
-        					<div class="dropdown-menu" style="position: absolute" aria-labelledby="navbarDropdown">
-          						<h:commandButton value="Logout" action="#{userController.logout()}" class="dropdown-item btn btn-link" />
-        					</div>
-        				</li>
-      				</ul>
-      			</h:form>
-            </div>
-        </div>
-    </header>
+    <ui:include src="WEB-INF/common/navbar.xhtml"></ui:include>
 
     <main role="main">
 
@@ -117,7 +80,7 @@
                 </div>
             </h:form>
         </div>
-		
+
         <!-- Stories -->
         <div class="album py-5 bg-light">
             <div class="container">

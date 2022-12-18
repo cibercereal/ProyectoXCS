@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+    <title>μStories</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <h:outputStylesheet name="webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+
+    <!-- Custom styles for this template -->
+    <h:outputStylesheet library="css" name="base.css"/>
+</h:head>
+
+<h:body>
+
+    <!-- Header -->
+    <header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a
+                        href="./index.xhtml"
+                        class="navbar-brand d-flex align-items-center"
+                >
+                    <h:graphicImage id="microstories-logo" value="#{resource['img:microstories-logo.png']}"/>
+                    <strong>μStories</strong>
+                </a>
+                <h:form id="searchStories" class="form-inline mt-2 mt-md-0">
+                    <h:inputText
+                            value="#{storyController.searchText}"
+                            styleClass="form-control mr-sm-2"
+                            a:placeholder="Search"
+                            aria-label="Search"
+                    />
+                    <h:commandButton
+                            value="Search"
+                            action="#{storyController.searchStories()}"
+                            class="btn btn-outline-success my-2 my-sm-0"/>
+                </h:form>
+                <h:form rendered="#{not empty loginController.currentUser}">
+                	<ul class="navbar-nav">
+         				<li class="nav-item dropdown">
+        					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          					#{loginController.username}
+        					</a>
+        			
+        					<div class="dropdown-menu" style="position: absolute" aria-labelledby="navbarDropdown">
+          						<h:commandButton value="Logout" action="#{loginController.logout()}" class="dropdown-item btn btn-link" />
+        					</div>
+        				</li>
+      				</ul>
+      			</h:form>
+            </div>
+        </div>
+    </header>
+
+</h:body>
+</html>

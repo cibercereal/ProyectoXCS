@@ -29,21 +29,25 @@
 			value="#{resource['img:microstories-logo.png']}" width="72"
 			height="72" />
 		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<p>#{userController.username}</p>
 
 		<label class="sr-only">Username</label>
-		<h:inputText value="#{userController.username}"
+		<h:inputText value="#{loginController.username}"
 					 styleClass="form-control"
 					 a:placeholder="Username"
 					 aria-label="Username" />
 
 		<label for="inputPassword" class="sr-only">Password</label>
-		<h:inputSecret value="#{userController.password}"
+		<h:inputSecret value="#{loginController.password}"
 					   styleClass="form-control"
 					   a:placeholder="Password"
 					   aria-label="Password" />
+		<c:choose>
+			<c:when test="#{loginController.error}">
+				<p>Incorrect user credentials, try again!</p>
+			</c:when>
+		</c:choose>
 
-		<h:commandButton value="SignIn" action="#{userController.login()}"
+		<h:commandButton value="Sign In" action="#{loginController.login()}"
 			class="btn btn-lg btn-primary btn-block" />
 	</h:form>
 

@@ -28,20 +28,13 @@
 	</servlet-mapping>
 
 	<!-- Defining security constraint for type of roles available -->
-	<!-- security-constraint>
-		<web-resource-collection>
-			<web-resource-name>admin</web-resource-name>
-			<url-pattern>/api/owner/*</url-pattern>
-			<http-method-omission>OPTIONS</http-method-omission>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>ADMIN</role-name>
-		</auth-constraint>
-	</security-constraint -->
-
 
 	<!-- Defining security role -->
-	<!-- security-role>
+	<security-role>
 		<role-name>ADMIN</role-name>
-	</security-role -->
+	</security-role>
+	<security-role>
+		<role-name>AUTHOR</role-name>
+	</security-role>
+	
 </web-app>

@@ -23,32 +23,8 @@
     </h:head>
 
     <h:body>
-        <!-- Header -->
-        <header>
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container d-flex justify-content-between">
-                    <a
-                            href="./index.xhtml"
-                            class="navbar-brand d-flex align-items-center"
-                    >
-                        <h:graphicImage id="microstories-logo" value="#{resource['img:microstories-logo.png']}"/>
-                        <strong>μStories</strong>
-                    </a>
-                    <h:form id="searchStories" class="form-inline mt-2 mt-md-0">
-                        <h:inputText
-                                value="#{storyController.searchText}"
-                                styleClass="form-control mr-sm-2"
-                                a:placeholder="Search"
-                                aria-label="Search"
-                        />
-                        <h:commandButton
-                                value="Search"
-                                action="#{storyController.searchStories()}"
-                                class="btn btn-outline-success my-2 my-sm-0"/>
-                    </h:form>
-                </div>
-            </div>
-        </header>
+        <!-- Navbar -->
+    <ui:include src="WEB-INF/common/navbar.xhtml"></ui:include>
 
         <!-- Search options -->
         <section class="jumbotron text-center">
