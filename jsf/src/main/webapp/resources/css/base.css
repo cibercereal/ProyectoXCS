@@ -96,3 +96,9 @@ footer p {
   display: flex;
   justify-content: center;
 }
+
+/* NAVBAR
+-------------------------------------------------- */
+.navbar-nav .dropdown-menu {
+	position: absolute !important;
+}
