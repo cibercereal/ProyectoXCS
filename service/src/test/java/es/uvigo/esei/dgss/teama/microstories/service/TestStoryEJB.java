@@ -219,7 +219,7 @@ public class TestStoryEJB {
         final Date referenceDate = cal.getTime();
 
         final List<Story> expectedStories = hottestStories(Genre.POETRY, startDate, referenceDate, 0, 10);
-        final List<Story> queriedStories = storyEJB.findHottestStories(Genre.POETRY, startDate, referenceDate, 0, 10);
+        final List<Story> queriedStories = storyEJB.findHottestStories(Genre.POETRY, startDate, referenceDate, 10);
 
         assertThat(expectedStories, containsStoriesInOrder(queriedStories));
     }

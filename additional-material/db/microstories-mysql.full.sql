@@ -31,7 +31,7 @@ CREATE TABLE `user`
 (
     `login`    varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
     `password` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+    `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
     PRIMARY KEY (`login`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

@@ -58,10 +58,10 @@ public class Story implements Serializable {
 
     @ElementCollection
     @CollectionTable(
-            name = "visitDate",
+            name = "visitdate",
             joinColumns = @JoinColumn(name = "storyId")
     )
-    @Column(name = "visitDate")
+    @Column(name = "visitdate")
     private List<Date> visitDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

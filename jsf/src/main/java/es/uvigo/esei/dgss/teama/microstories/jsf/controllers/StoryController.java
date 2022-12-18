@@ -1,11 +1,16 @@
 package es.uvigo.esei.dgss.teama.microstories.jsf.controllers;
 
+import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
 import es.uvigo.esei.dgss.teama.microstories.service.StoryEJB;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -95,7 +100,19 @@ public class StoryController implements Serializable {
   public String returnIndex(){
     return "index";
   }
+  public List<Story> getMostReadStories(){
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DATE,-30);
+    List<Story> storyGenre = storyEJB.findHottestStories(Genre.STORY,calendar.getTime(),new Date(),2);
+    List<Story> poetryGenre = storyEJB.findHottestStories(Genre.POETRY,calendar.getTime(),new Date(),2);
+    List<Story> nanoStoryGenre = storyEJB.findHottestStories(Genre.NANOSTORY,calendar.getTime(),new Date(),2);
+    List<Story> storiesMostRead = new ArrayList<>();
+    storiesMostRead.addAll(storyGenre);
+    storiesMostRead.addAll(poetryGenre);
+    storiesMostRead.addAll(nanoStoryGenre);
 
+    return storiesMostRead;
+  }
 }
 
 

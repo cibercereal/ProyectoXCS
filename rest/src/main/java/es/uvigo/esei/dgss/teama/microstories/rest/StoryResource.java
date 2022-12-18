@@ -127,7 +127,7 @@ public class StoryResource {
     	Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString + " 00:00:00");
 		Date referenceDate = new SimpleDateFormat("yyyy-MM-dd").parse(referenceDateString + " 23:59:59");
 		
-    	List<Story> storyList = this.storyEJB.findHottestStories(genre, startDate, referenceDate, pageNumber, maxItems);
+    	List<Story> storyList = this.storyEJB.findHottestStories(genre, startDate, referenceDate, maxItems);
 
         if (storyList == null)
             throw new BadRequestException();

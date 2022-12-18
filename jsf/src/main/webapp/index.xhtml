@@ -7,7 +7,7 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 
-<h:head>
+<head>
     <title>μStories</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -15,11 +15,24 @@
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <h:outputStylesheet name="webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
-
-    <!-- Custom styles for this template -->
-    <h:outputStylesheet library="css" name="base.css"/>
-</h:head>
+    <!-- CSS -->
+    <link href="styles/main.css" rel="stylesheet"/>
+    <link href="resources/css/base.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
+    <!-- Popper and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css"
+          integrity="sha384-7ynz3n3tAGNUYFZD3cWe5PDcE36xj85vyFkawcF6tIwxvIecqKvfwLiaFdizhPpN" crossorigin="anonymous"/>
+</head>
 
 <h:body>
 
@@ -51,6 +64,36 @@
     </header>
 
     <main role="main">
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel images -->
+            <div class="carousel-inner">
+                <ui:repeat value="#{storyController.mostReadStories}" var="story" varStatus="idx">
+                    <div class="carousel-item #{idx.index == 0 ?'active':''} itemCarousel" style="#{story.genre == 'POETRY' ?'background-color:#fdcae1;':story.genre == 'NANOSTORY' ?'background-color:#84b6f4;':story.genre == 'STORY' ?'background-color:#ff6961;':''}">
+
+
+                        <div class="carousel-caption d-none d-md-block mx-auto">
+                            <h2>#{story.title}</h2>
+                            <p>#{story.content.length() > 30 ? story.content.substring(0, 30) : story.content}</p>
+                            <h5>#{story.genre}</h5>
+                        </div>
+                      </div>
+
+                </ui:repeat>
+            </div>
+            <!-- Carousel slide controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
 
         <!-- Explore more stories button -->
         <div class="card-body d-flex justify-content-center">
@@ -97,10 +140,10 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-muted  ">
-                                            <span class="badge badge-pill badge-primary  m-1">#{story.mainTheme}</span>
+                                            <span class="badge rounded-pill bg-primary  m-1">#{story.mainTheme}</span>
 
-                                            <span class="badge badge-pill badge-secondary  m-1">#{story.secondaryTheme}</span>
-                                            <span class="badge badge-pill badge-dark float-right m-1">#{story.genre}</span>
+                                            <span class="badge rounded-pill bg-secondary  m-1">#{story.secondaryTheme}</span>
+                                            <span class="badge rounded-pill bg-dark float-right ">#{story.genre}</span>
                                         </div>
                                     </div>
                                 </div>

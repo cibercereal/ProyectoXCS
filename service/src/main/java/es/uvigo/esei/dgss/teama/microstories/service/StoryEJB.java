@@ -144,13 +144,12 @@ public class StoryEJB {
      * @param genre         The genre of the story.
      * @param startDate     The date when start to search.
      * @param referenceDate The date on which the query is made.
-     * @param page          The page number.
      * @param maxItems      The size of the page.
      * @return The list of the most read stories.
      */
-    public List<Story> findHottestStories(Genre genre, Date startDate, Date referenceDate, int page, int maxItems) {
-        if (maxItems <= 0 || page < 0) {
-            throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0");
+    public List<Story> findHottestStories(Genre genre, Date startDate, Date referenceDate, int maxItems) {
+        if (maxItems <= 0) {
+            throw new IllegalArgumentException("maxItems can not be 0 or less than 0");
         }
 
         return em.createQuery("SELECT s FROM Story s " +
@@ -160,7 +159,6 @@ public class StoryEJB {
                         "AND vd > :startDate AND vd < :referenceDate " +
                         "GROUP BY s " +
                         "ORDER BY count(vd) DESC, s.id", Story.class)
-                .setFirstResult(getStartPagination(page, maxItems))
                 .setMaxResults(maxItems)
                 .setParameter("genre", genre)
                 .setParameter("startDate", startDate)
