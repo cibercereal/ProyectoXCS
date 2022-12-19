@@ -23,6 +23,10 @@ public class User implements Serializable {
     @Column(length = 70)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    private Role role;
+
     @OneToMany(
             mappedBy = "user",
             targetEntity = Story.class,
