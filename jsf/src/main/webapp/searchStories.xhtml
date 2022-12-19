@@ -4,8 +4,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>μStories</title>
@@ -50,6 +50,22 @@
 	</header>
 
 	<main role="main">
+		<section class="jumbotron text-center">
+
+				<div class="card-body pt-5 pb-5">
+					<h:form class="d-flex w-50 mx-auto">
+						<h:inputText
+								value="#{storyController.searchText}"
+								styleClass="form-control me-2 d-inline-block"
+								pt:placeholder="Search..."/>
+						<h:commandButton
+								styleClass="btn btn-primary text-white"
+								action="#{storyController.searchStories()}"
+								value="Search"/>
+					</h:form>
+				</div>
+
+		</section>
 		<!-- Explore more stories button -->
         <div class="card-body d-flex justify-content-center">
             <h:form class="form-inline">

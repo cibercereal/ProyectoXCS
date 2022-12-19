@@ -100,6 +100,9 @@ public class StoryController implements Serializable {
   public String returnIndex(){
     return "index";
   }
+  public String returnSearch(){
+    return "searchStories";
+  }
   public List<Story> getMostReadStories(){
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE,-30);
