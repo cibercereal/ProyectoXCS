@@ -27,12 +27,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.STORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("user1", "12345");
 
-        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
         assertThat(localStory.getId(), is(equalTo(id)));
         assertThat(localStory.getDate(), is(equalTo(date)));
@@ -53,12 +52,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -70,12 +68,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.POETRY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -86,12 +83,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.STORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -102,12 +98,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -119,12 +114,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -135,12 +129,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -152,12 +145,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = null;
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User(null, "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -169,12 +161,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -186,12 +177,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -203,12 +193,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -220,12 +209,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = null;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -237,12 +225,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = null;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -254,12 +241,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.HISTORIC;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = null;
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -271,12 +257,11 @@ public class StoryEntityTest {
         final Genre genre = null;
         final Theme mainTheme = Theme.HISTORIC;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Pepe", "12345");
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -288,12 +273,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.NANOSTORY;
         final Theme mainTheme = Theme.HISTORIC;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Pepe";
         final Date date = new Date();
         final boolean published = true;
-        final User user = null;
+        final User author = null;
 
-        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
     }
 
@@ -305,12 +289,11 @@ public class StoryEntityTest {
         final Genre genre = Genre.STORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Date();
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("Antonio", "12345");
 
-        final Story story = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        final Story story = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
         final List<Date> visitDate = new ArrayList<>();
         final Date newVisitDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);

@@ -2,13 +2,11 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +42,6 @@ public class Story implements Serializable {
     private String title;
     @Column(length = 1000)
     private String content;
-
     @Enumerated(EnumType.STRING)
     private Genre genre;
     @Enumerated(EnumType.STRING)
@@ -52,7 +49,10 @@ public class Story implements Serializable {
     @Enumerated(EnumType.STRING)
     private Theme secondaryTheme;
 
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author", referencedColumnName = "login", nullable = false)
+    @XmlTransient
+    private User author;
 
     private boolean published;
 
@@ -64,16 +64,12 @@ public class Story implements Serializable {
     @Column(name = "visitdate")
     private List<Date> visitDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "login", referencedColumnName = "login", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private User user;
-
     public Story() {
     }
 
-    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published, User user) throws IllegalArgumentException {
+    public Story(int id, Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, User author, boolean published) throws IllegalArgumentException {
 
-        storyValidations(date, title, content, genre, mainTheme, secondaryTheme, author, user);
+        storyValidations(date, title, content, genre, mainTheme, secondaryTheme, author);
 
         this.id = id;
         this.date = date;
@@ -84,12 +80,13 @@ public class Story implements Serializable {
         this.secondaryTheme = secondaryTheme;
         this.author = author;
         this.published = published;
-        this.user = user;
+        this.visitDate = new ArrayList<>();
+        this.author.addStory(this);
     }
 
-    public Story(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, boolean published, User user) throws IllegalArgumentException {
+    public Story(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, User author, boolean published) throws IllegalArgumentException {
 
-        storyValidations(date, title, content, genre, mainTheme, secondaryTheme, author, user);
+        storyValidations(date, title, content, genre, mainTheme, secondaryTheme, author);
 
         this.date = date;
         this.title = title;
@@ -99,7 +96,8 @@ public class Story implements Serializable {
         this.secondaryTheme = secondaryTheme;
         this.author = author;
         this.published = published;
-        this.user = user;
+        this.visitDate = new ArrayList<>();
+        this.author.addStory(this);
     }
 
     public int getId() {
@@ -130,20 +128,12 @@ public class Story implements Serializable {
         return secondaryTheme;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
     public boolean isPublished() {
         return published;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     /**
@@ -187,6 +177,16 @@ public class Story implements Serializable {
 
     }
 
+    public void setAuthor(User author) {
+        if (this.author != null)
+            this.author.internalRemoveStory(this);
+
+        this.author = author;
+
+        if (this.author != null)
+            this.author.internalAddStory(this);
+    }
+
     @Override
     public String toString() {
         return "Story{" +
@@ -202,7 +202,7 @@ public class Story implements Serializable {
                 '}';
     }
 
-    private void storyValidations(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, String author, User user) {
+    private void storyValidations(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, User author) {
         if (date == null) {
             throw new IllegalArgumentException("Error: Content for a date cannot be null");
         }
@@ -245,14 +245,8 @@ public class Story implements Serializable {
         if (secondaryTheme == null) {
             throw new IllegalArgumentException("Error: Content for a secondaryTheme cannot be null");
         }
-        if (author == null || author.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a author cannot be empty");
-        }
-        if (author.length() > 255) {
-            throw new IllegalArgumentException("Error: Content for a author cannot exceed 255 characters");
-        }
 
-        if (user == null) {
+        if (author == null) {
             throw new IllegalArgumentException("Error: Content for a user cannot be null");
         }
     }

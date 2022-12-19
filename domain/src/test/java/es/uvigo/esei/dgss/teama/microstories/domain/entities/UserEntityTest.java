@@ -47,16 +47,14 @@ public class UserEntityTest {
         final Genre genre = Genre.STORY;
         final Theme mainTheme = Theme.ADVENTURE;
         final Theme secondaryTheme = Theme.SUSPENSE;
-        final String author = "Antonio";
         final Date date = new Timestamp(new Date().getTime());
         final boolean published = true;
-        final User user = new User("user1", "12345");
+        final User author = new User("user1", "12345");
         final Collection<Story> stories = new ArrayList<Story>() {
         };
-        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published, user);
+        Story localStory = new Story(id, date, title, content, genre, mainTheme, secondaryTheme, author, published);
 
-        stories.add(localStory);
-        localUser.setStories(stories);
+        localUser.addStory(localStory);
 
         assertThat(localUser.getStories(), is(equalTo(stories)));
     }

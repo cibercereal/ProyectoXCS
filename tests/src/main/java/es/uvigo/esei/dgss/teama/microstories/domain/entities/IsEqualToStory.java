@@ -4,9 +4,12 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 public class IsEqualToStory extends IsEqualToEntity<Story> {
+    private final boolean withoutRelations;
 
-    public IsEqualToStory(Story story) {
+    public IsEqualToStory(Story story, boolean withoutRelations) {
         super(story);
+
+        this.withoutRelations = withoutRelations;
     }
 
     @Override
@@ -17,26 +20,26 @@ public class IsEqualToStory extends IsEqualToEntity<Story> {
             this.addTemplatedDescription("actual", expected.toString());
             return false;
         } else {
-            return checkAttribute("author", Story::getAuthor, actual)
-                    && checkAttribute("content", Story::getContent, actual)
+            return checkAttribute("content", Story::getContent, actual)
                     && checkAttribute("date", Story::getDate, actual)
                     && checkAttribute("id", Story::getId, actual)
                     && checkAttribute("title", Story::getTitle, actual)
                     && checkAttribute("genre", Story::getGenre, actual)
                     && checkAttribute("mainTheme", Story::getMainTheme, actual)
                     && checkAttribute("secondaryTheme", Story::getSecondaryTheme, actual)
-                    && checkAttribute("published", Story::isPublished, actual);
+                    && checkAttribute("published", Story::isPublished, actual)
+                    && (withoutRelations || checkAttribute("author", Story::getAuthor, actual, IsEqualToUser::equalToUserWithoutRelations));
         }
     }
 
     @Factory
     public static IsEqualToStory equalToStory(Story story) {
-        return new IsEqualToStory(story);
+        return new IsEqualToStory(story, false);
     }
 
     @Factory
     public static IsEqualToStory equalToStoryWithoutRelations(Story story) {
-        return new IsEqualToStory(story);
+        return new IsEqualToStory(story, true);
     }
 
     @Factory

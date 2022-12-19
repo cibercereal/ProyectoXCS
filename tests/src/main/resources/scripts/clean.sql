@@ -1,0 +1,3 @@
+DELETE FROM visitDate;
+DELETE FROM story;
+DELETE FROM user;

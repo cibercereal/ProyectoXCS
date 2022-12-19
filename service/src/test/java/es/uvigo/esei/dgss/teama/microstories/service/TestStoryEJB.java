@@ -8,15 +8,14 @@ import es.uvigo.esei.dgss.teama.microstories.domain.entities.Theme;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.User;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.RoleCaller;
 import es.uvigo.esei.dgss.teama.microstories.service.util.security.TestPrincipal;
-import org.hamcrest.CoreMatchers;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.persistence.CleanupUsingScript;
 import org.jboss.arquillian.persistence.ShouldMatchDataSet;
 import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,7 +32,6 @@ import java.util.Locale;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.containsStoriesInOrder;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.IsEqualToStory.equalToStory;
 import static es.uvigo.esei.dgss.teama.microstories.domain.entities.StoryDataset.*;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertNull;
@@ -41,7 +39,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(Arquillian.class)
 @UsingDataSet("stories.xml")
-@Ignore
+@CleanupUsingScript("clean.sql")
 public class TestStoryEJB {
 
     @Inject
@@ -155,7 +153,6 @@ public class TestStoryEJB {
         final Story expectedStory = storyWithId(storeId);
         final Story story = storyEJB.getById(storeId);
 
-        assertThat(story, CoreMatchers.is(instanceOf(Story.class)));
         assertThat(story, is(equalToStory(expectedStory)));
     }
 
@@ -218,14 +215,13 @@ public class TestStoryEJB {
         cal.set(Calendar.DAY_OF_MONTH, 30);
         final Date referenceDate = cal.getTime();
 
-        final List<Story> expectedStories = hottestStories(Genre.POETRY, startDate, referenceDate, 0, 10);
-        final List<Story> queriedStories = storyEJB.findHottestStories(Genre.POETRY, startDate, referenceDate, 10);
+        final List<Story> expectedStories = hottestStories(Genre.POETRY, startDate, referenceDate, 0, 5);
+        final List<Story> queriedStories = storyEJB.findHottestStories(Genre.POETRY, startDate, referenceDate, 5);
 
         assertThat(expectedStories, containsStoriesInOrder(queriedStories));
     }
 
     @Test
-    @ShouldMatchDataSet(value = {"stories.xml", "stories-new-visit.xml"}, excludeColumns = "VISITDATE.visitDate")
     public void testGetStory() {
         final Story existentStory = existentStory();
 
@@ -304,12 +300,12 @@ public class TestStoryEJB {
     @Test
     @ShouldMatchDataSet(value = "stories-edit.xml", excludeColumns = "visitdate.visitDate")
     public void testModifyStoryData() {
-        String username = "user1";
+        String username = "Juan Manuel Lopez";
         principal.setName(username);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
         try {
-            Date date = formatter.parse("2006-02-01 01:01:01");
-            final Story story = new Story(1, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true, new User(username, "827ccb0eea8a706c4c34a16891f84e7b"));
+            Date date = formatter.parse("2007-03-01 01:01:01");
+            final Story story = new Story(1, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, new User(username, "12345"), true);
             asAuthor.run(() -> this.storyEJB.editStory(1, story));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -319,16 +315,17 @@ public class TestStoryEJB {
     @Test(expected = EJBTransactionRolledbackException.class)
     @ShouldMatchDataSet("stories.xml")
     public void testModifyNonExistentStory() {
-        String username = "user1";
+        String username = "Juan Manuel Lopez\"";
         principal.setName(username);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 
         try {
             Date date = formatter.parse("2006-02-01 01:01:01");
-            final Story story = new Story(55, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, "Juan Manuel Lopez", true, new User(username, "827ccb0eea8a706c4c34a16891f84e7b"));
+            final Story story = new Story(55, date, "Aliquam ultrices iaculis odio.", "eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu,", Genre.NANOSTORY, Theme.ROMANCE, Theme.HORROR, new User(username, "827ccb0eea8a706c4c34a16891f84e7b"), true);
             asAuthor.run(() -> this.storyEJB.editStory(102, story));
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
+
 }

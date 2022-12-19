@@ -2,7 +2,10 @@ package es.uvigo.esei.dgss.teama.microstories.domain.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * The User entity represents an author of stories that can create, modify(a non publish story),
@@ -28,7 +31,7 @@ public class User implements Serializable {
     private Role role;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "author",
             targetEntity = Story.class,
             cascade = CascadeType.ALL,
             orphanRemoval = true,
@@ -40,25 +43,7 @@ public class User implements Serializable {
     }
 
     public User(String login, String password) {
-
-        if (login == null || login.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a login cannot be empty or null");
-        }
-
-        if (login.length() > 70) {
-            throw new IllegalArgumentException("Error: Content for a login cannot exceed 70 characters");
-        }
-
-        if (password == null || password.length() == 0) {
-            throw new IllegalArgumentException("Error: Content for a password cannot be empty or null");
-        }
-
-        if (password.length() > 70) {
-            throw new IllegalArgumentException("Error: Content for a password cannot exceed 70 characters");
-        }
-
-        this.login = login;
-        this.password = password;
+        this(login, password, new ArrayList<>());
     }
 
     public User(String login, String password, Collection<Story> stories) {
@@ -79,8 +64,8 @@ public class User implements Serializable {
             throw new IllegalArgumentException("Error: Content for a password cannot exceed 70 characters");
         }
 
-        if (stories == null || stories.size() == 0) {
-            throw new IllegalArgumentException("Error: Content for a stories cannot be empty or null");
+        if (stories == null) {
+            throw new IllegalArgumentException("Error: Content for a stories cannot be null");
         }
         this.login = login;
         this.password = password;
@@ -91,23 +76,46 @@ public class User implements Serializable {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Collection<Story> getStories() {
         return stories;
     }
 
-    public void setStories(Collection<Story> stories) {
-        this.stories = stories;
+    public void addStory(Story story){
+        requireNonNull(story, "story can`t be null");
+
+        if(!this.ownsStory(story)){
+            story.setAuthor(this);
+        }
+    }
+
+    public void removeStory(Story story) {
+        requireNonNull(story, "story can't be null");
+
+        if (this.ownsStory(story)) {
+            story.setAuthor(null);
+        } else {
+            throw new IllegalArgumentException("pet doesn't belong to this owner");
+        }
+    }
+
+    public boolean ownsStory(Story story) {
+        return this.stories.contains(story);
+    }
+
+    void internalAddStory(Story story) {
+        requireNonNull(story, "story can't be null");
+
+        if (!this.ownsStory(story))
+            this.stories.add(story);
+    }
+
+    void internalRemoveStory(Story story) {
+        requireNonNull(story, "story can't be null");
+
+        this.stories.remove(story);
     }
 }

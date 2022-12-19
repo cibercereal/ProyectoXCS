@@ -1,6 +1,5 @@
 package es.uvigo.esei.dgss.teama.microstories.service;
 
-
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Genre;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Publication;
 import es.uvigo.esei.dgss.teama.microstories.domain.entities.Story;
@@ -43,10 +42,7 @@ public class StoryEJB {
      * @return The story that corresponds with the search id.
      */
     public Story getById(final int id) {
-        Story story = em.find(Story.class, id);
-        story.addVisit(new Date());
-        em.persist(story);
-        return story;
+        return em.find(Story.class, id);
     }
 
     public List<Story> getStoriesByText(String text, int pageNumber, int maxItems) {
@@ -130,7 +126,7 @@ public class StoryEJB {
         if (page == 0) {
             query.setFirstResult(0);
         } else {
-            query.setFirstResult((page - 1) * maxItems);
+            query.setFirstResult(page * maxItems);
         }
 
         query.setMaxResults(maxItems);
@@ -179,7 +175,7 @@ public class StoryEJB {
     @RolesAllowed("author")
     public void createStory(Date date, String title, String content, Genre genre, Theme mainTheme, Theme secondaryTheme, Boolean published) {
         String currentUsername = currentUser.getName();
-        Story story = new Story(date, title, content, genre, mainTheme, secondaryTheme, currentUsername, published, getUserByLogin(currentUsername));
+        Story story = new Story( date, title, content, genre, mainTheme, secondaryTheme, getUserByLogin(currentUsername), published);
         em.persist(story);
     }
 
@@ -190,14 +186,14 @@ public class StoryEJB {
      * @param story The story to modify.
      * @return The modified story.
      */
-    @RolesAllowed("user")
+    @RolesAllowed("author")
     public Story editStory(int id, Story story) {
         String login = currentUser.getName();
         if (id < 1) {
             throw new IllegalArgumentException();
         }
 
-        if (login.equals(story.getUser().getLogin())) {
+        if (login.equals(story.getAuthor().getLogin())) {
             return em.merge(story);
         } else {
             throw new EJBAccessException();
