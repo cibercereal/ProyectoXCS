@@ -328,4 +328,14 @@ public class TestStoryEJB {
         }
     }
 
+    @Test
+    public void getStoriesByUser() {
+        String username = "Juan Manuel Lopez";
+        principal.setName(username);
+
+        List<Story> expectedUserStories = getStoriesSubListByUser(username, 0, 5);
+        List<Story> userStories = asAuthor.call(() -> this.storyEJB.getStoriesByUser(0, 5));
+
+        assertThat(expectedUserStories, containsStoriesInOrder(userStories));
+    }
 }

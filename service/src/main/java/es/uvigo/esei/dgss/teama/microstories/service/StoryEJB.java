@@ -261,4 +261,31 @@ public class StoryEJB {
         }
         return (int) Math.ceil(numStories / maxItems);
     }
+
+    /**
+     * @param page The page number to search.
+     * @param maxItems The size of the page.
+     * @return A list of stories of the current user
+     */
+    @RolesAllowed("author")
+    public List<Story> getStoriesByUser(int page, int maxItems){
+        String currentUserLogin = currentUser.getName();
+
+        if (maxItems <= 0 || page < 0) {
+            throw new IllegalArgumentException("pagNumber or maxItems can not be 0 or less than 0 )");
+        }
+
+        Query query = em.createQuery("SELECT s FROM Story s WHERE s.author.login = :login", Story.class)
+                .setParameter("login", currentUserLogin);
+
+        if (page == 0) {
+            query.setFirstResult(0);
+        } else {
+            query.setFirstResult(page * maxItems);
+        }
+
+        query.setMaxResults(maxItems);
+
+        return query.getResultList();
+    }
 }

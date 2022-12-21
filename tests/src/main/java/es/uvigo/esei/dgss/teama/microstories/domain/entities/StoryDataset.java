@@ -271,11 +271,11 @@ public class StoryDataset {
         return storyWithId(STORY_ID);
     }
 
-    public static List<Story> getStoriesSubListByUser(String login, int indexI, int indexJ) {
+    public static List<Story> getStoriesSubListByUser(String login, int page, int maxItems) {
         return stream(stories())
                 .filter(story -> story.getAuthor().getLogin().contains(login))
-                .sorted(Comparator.comparing(Story::getDate).reversed())
-                .collect(Collectors.toList())
-                .subList(indexI, indexJ);
+                .skip((long) page * maxItems)
+                .limit(maxItems)
+                .collect(Collectors.toList());
     }
 }
