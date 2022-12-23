@@ -116,6 +116,10 @@ public class StoryController implements Serializable {
 
     return storiesMostRead;
   }
+  
+  public List<Story> getStoriesByUser() {
+	    return storyEJB.getStoriesByUser(1, 5);
+	  }
 }
 
 

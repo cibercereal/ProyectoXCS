@@ -16,7 +16,7 @@ import es.uvigo.esei.dgss.teama.microstories.service.UserEJB;
 
 
 @Named(value = "loginController")
-@SessionScoped
+@RequestScoped
 public class LoginController implements Serializable {
 
 	@EJB
