@@ -13,12 +13,12 @@
 		<repository>
 			<id>deployment</id>
 			<name>Internal Releases</name>
-			<url>https://www.sing-group.org/dt/nexus/content/repositories/releases/</url>
+			<url>http://localhost:8081/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>deployment</id>
 			<name>Internal SNAPSHOT Releases</name>
-			<url>https://www.sing-group.org/dt/nexus/content/repositories/snapshots/</url>
+			<url>http://localhost:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
