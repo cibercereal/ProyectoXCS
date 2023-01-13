@@ -12,4 +12,3 @@ Los alumnos que han participado en este proyecto han sido:
 * Brais Domínguez Álvarez
 * Patricia Martín Pérez
 * Julio Patricio Da Silva
-* Álvaro Suárez Feijoo 
